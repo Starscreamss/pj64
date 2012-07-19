@@ -565,7 +565,8 @@ void SetupPluginScreen (HWND hDlg) {
 	WIN32_FIND_DATA FindData;
 	PLUGIN_INFO PluginInfo;
 	char SearchsStr[300], Plugin[300];
-	HANDLE hFind, hLib;
+	HANDLE hFind;
+	HMODULE hLib;
 	int index;
 
 #ifdef EXTERNAL_RELEASE

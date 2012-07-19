@@ -1171,11 +1171,14 @@ void RunRsp (void) {
 				sprintf(StatusString,"Dlist: %d   Alist: %d",DlistCount,AlistCount);
 				SendMessage( hStatusWnd, SB_SETTEXT, 0, (LPARAM)StatusString );
 			}
+
+			//TODO - this was an error in the original code (the DisplayCPUPer not being a function call), so we need to debug it and see if it is supposed to be happening
 			if (Profiling || DisplayCPUPer) {
 				char Label[100];
 
 				strncpy(Label,ProfilingLabel,sizeof(Label));
 
+				//TODO - this was an error in the original code (the DisplayCPUPer not being a function call), so we need to debug it and see if it is supposed to be happening
 				if (IndvidualBlock && !DisplayCPUPer) {
 					StartTimer("RSP");
 				} else {

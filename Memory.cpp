@@ -76,14 +76,14 @@ int Allocate_Memory ( void ) {
 		return FALSE;
 	}
 
-	(BYTE *)JumpTable = (BYTE *) VirtualAlloc( NULL, 0x10000000, MEM_RESERVE | MEM_TOP_DOWN, PAGE_READWRITE );
+	JumpTable = (void**) VirtualAlloc( NULL, 0x10000000, MEM_RESERVE | MEM_TOP_DOWN, PAGE_READWRITE );
 	if( JumpTable == NULL ) {  
 		DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 		return FALSE;
 	}
 
 #ifndef EXTERNAL_RELEASE
-	SyncMemory = (unsigned char *) VirtualAlloc( NULL, 0x20000000, MEM_RESERVE | MEM_TOP_DOWN, PAGE_READWRITE );
+	SyncMemory = (BYTE*) VirtualAlloc( NULL, 0x20000000, MEM_RESERVE | MEM_TOP_DOWN, PAGE_READWRITE );
 #endif
 
 	/* Recomp code */
@@ -108,7 +108,7 @@ int Allocate_Memory ( void ) {
 	}
 	
 	/* Delay Slot Table */
-	(BYTE *)DelaySlotTable = (BYTE *) VirtualAlloc( NULL, (0x20000000 >> 0xA), MEM_RESERVE | MEM_TOP_DOWN, PAGE_READWRITE );
+	DelaySlotTable = (void* *) VirtualAlloc( NULL, (0x20000000 >> 0xA), MEM_RESERVE | MEM_TOP_DOWN, PAGE_READWRITE );
 	if( DelaySlotTable == NULL ) {  
 		DisplayError(GS(MSG_MEM_ALLOC_ERROR));
 		return FALSE;
@@ -1053,10 +1053,10 @@ int r4300i_Command_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 	}
 	exRec = *lpEP->ExceptionRecord;
 
-    if ((int)((char *)lpEP->ExceptionRecord->ExceptionInformation[1] - N64MEM) < 0) {
+    if ((int)((char *)lpEP->ExceptionRecord->ExceptionInformation[1] - (char*)N64MEM) < 0) {
 		return EXCEPTION_CONTINUE_SEARCH;
 	}
-    if ((int)((char *)lpEP->ExceptionRecord->ExceptionInformation[1] - N64MEM) > 0x1FFFFFFF) {
+    if ((int)((char *)lpEP->ExceptionRecord->ExceptionInformation[1] - (char*)N64MEM) > 0x1FFFFFFF) {
 		return EXCEPTION_CONTINUE_SEARCH;
 	}
 
@@ -1241,7 +1241,7 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 	case 0x0F:
 		switch(*(TypePos + 1)) {
 		case 0xB6:
-			if (!r4300i_LB_NonMemory(MemAddress,Reg,FALSE)) {
+			if (!r4300i_LB_NonMemory(MemAddress,(DWORD*)Reg,FALSE)) {
 				if (ShowUnhandledMemory) {
 					DisplayError("Failed to load byte\n\nMIPS Address: %X\nX86 Address",
 						(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
@@ -1251,7 +1251,7 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 			lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 			return EXCEPTION_CONTINUE_EXECUTION;		
 		case 0xB7:
-			if (!r4300i_LH_NonMemory(MemAddress,Reg,FALSE)) {
+			if (!r4300i_LH_NonMemory(MemAddress,(DWORD*)Reg,FALSE)) {
 				if (ShowUnhandledMemory) {
 					DisplayError("Failed to load half word\n\nMIPS Address: %X\nX86 Address",
 						(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
@@ -1261,7 +1261,7 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 			lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 			return EXCEPTION_CONTINUE_EXECUTION;		
 		case 0xBE:
-			if (!r4300i_LB_NonMemory(MemAddress,Reg,TRUE)) {
+			if (!r4300i_LB_NonMemory(MemAddress,(DWORD*)Reg,TRUE)) {
 				if (ShowUnhandledMemory) {
 					DisplayError("Failed to load byte\n\nMIPS Address: %X\nX86 Address",
 						(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
@@ -1271,7 +1271,7 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 			lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 			return EXCEPTION_CONTINUE_EXECUTION;		
 		case 0xBF:
-			if (!r4300i_LH_NonMemory(MemAddress,Reg,TRUE)) {
+			if (!r4300i_LH_NonMemory(MemAddress,(DWORD*)Reg,TRUE)) {
 				if (ShowUnhandledMemory) {
 					DisplayError("Failed to load half word\n\nMIPS Address: %X\nX86 Address",
 						(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
@@ -1289,7 +1289,7 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 	case 0x66:
 		switch(*(TypePos + 1)) {
 		case 0x8B:
-			if (!r4300i_LH_NonMemory(MemAddress,Reg,FALSE)) {
+			if (!r4300i_LH_NonMemory(MemAddress,(DWORD*)Reg,FALSE)) {
 				if (ShowUnhandledMemory) {
 					DisplayError("Failed to half word\n\nMIPS Address: %X\nX86 Address",
 						(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
@@ -1334,7 +1334,7 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 		lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 		return EXCEPTION_CONTINUE_EXECUTION;		
 	case 0x8A: 
-		if (!r4300i_LB_NonMemory(MemAddress,Reg,FALSE)) {
+		if (!r4300i_LB_NonMemory(MemAddress,(DWORD*)Reg,FALSE)) {
 			if (ShowUnhandledMemory) {
 				DisplayError("Failed to load byte\n\nMIPS Address: %X\nX86 Address",
 					(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
@@ -1344,7 +1344,7 @@ int r4300i_CPU_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 		lpEP->ContextRecord->Eip = (DWORD)ReadPos;
 		return EXCEPTION_CONTINUE_EXECUTION;		
 	case 0x8B: 
-		if (!r4300i_LW_NonMemory(MemAddress,Reg)) {
+		if (!r4300i_LW_NonMemory(MemAddress,(DWORD*)Reg)) {
 			if (ShowUnhandledMemory) {
 				DisplayError("Failed to load word\n\nMIPS Address: %X\nX86 Address",
 					(char *)exRec.ExceptionInformation[1] - (char *)N64MEM,
@@ -1395,7 +1395,7 @@ int r4300i_LB_NonMemory ( DWORD PAddr, DWORD * Value, BOOL SignExtend ) {
 		if ((PAddr & 2) == 0) { PAddr = (PAddr + 4) ^ 2; }
 		if ((PAddr - 0x10000000) < RomFileSize) {
 			if (SignExtend) {
-				(int)*Value = (char)ROM[PAddr - 0x10000000];
+				*Value = (int)(char)ROM[PAddr - 0x10000000];
 			} else {
 				*Value = ROM[PAddr - 0x10000000];
 			}
@@ -1406,13 +1406,14 @@ int r4300i_LB_NonMemory ( DWORD PAddr, DWORD * Value, BOOL SignExtend ) {
 		}
 	}
 
-	switch (PAddr & 0xFFF00000) {
-	default:
+	//zero 19-jul-2012 - removed the useless switch
+	//switch (PAddr & 0xFFF00000) {
+	//default:
 		* Value = 0;
 		return FALSE;
-		break;
-	}
-	return TRUE;
+		//break;
+	//}
+	//return TRUE;
 }
 
 BOOL r4300i_LB_VAddr ( DWORD VAddr, BYTE * Value ) {
@@ -1429,13 +1430,14 @@ BOOL r4300i_LD_VAddr ( DWORD VAddr, unsigned _int64 * Value ) {
 }
 
 int r4300i_LH_NonMemory ( DWORD PAddr, DWORD * Value, int SignExtend ) {
-	switch (PAddr & 0xFFF00000) {
-	default:
+	//zero 19-jul-2012 - removed the useless switch
+	//switch (PAddr & 0xFFF00000) {
+	//default:
 		* Value = 0;
 		return FALSE;
-		break;
-	}
-	return TRUE;
+		//break;
+	//}
+	//return TRUE;
 }
 
 BOOL r4300i_LH_VAddr ( DWORD VAddr, WORD * Value ) {

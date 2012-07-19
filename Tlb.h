@@ -29,7 +29,7 @@ typedef struct {
 		unsigned long Value;
 		unsigned char A[4];
 		
-		struct BreakDownPageMask{
+		struct {
 			unsigned zero : 13;
 			unsigned Mask : 12;
 			unsigned zero2 : 7;
@@ -41,7 +41,7 @@ typedef struct {
 		unsigned long Value;
 		unsigned char A[4];
 		
-		struct BreakDownEntryHi {
+		struct  {
 			unsigned ASID : 8;
 			unsigned Zero : 4;
 			unsigned G : 1;
@@ -54,7 +54,7 @@ typedef struct {
 		unsigned long Value;
 		unsigned char A[4];
 		
-		struct BreakDownEntryLo0{
+		struct {
 			unsigned GLOBAL: 1;
 			unsigned V : 1;
 			unsigned D : 1;
@@ -69,7 +69,7 @@ typedef struct {
 		unsigned long Value;
 		unsigned char A[4];
 		
-		struct BreakDownEntryLo1{
+		struct {
 			unsigned GLOBAL: 1;
 			unsigned V : 1;
 			unsigned D : 1;
