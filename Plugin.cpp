@@ -589,7 +589,7 @@ void SetupPluginScreen (HWND hDlg) {
 	if (hFind == INVALID_HANDLE_VALUE) { return; }
 	PluginCount = 0;
 	for (;;) {
-		PluginNames[PluginCount] = malloc(strlen(FindData.cFileName) + 1);
+		PluginNames[PluginCount] = (char*)malloc(strlen(FindData.cFileName) + 1);
 		strcpy(PluginNames[PluginCount],FindData.cFileName);
 		GetPluginDir(Plugin);
 		strcat(Plugin,PluginNames[PluginCount]);

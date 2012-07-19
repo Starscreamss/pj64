@@ -47,10 +47,10 @@ void AddMapEntry ( DWORD Address, char * Label) {
 	
 	if (NoOfMapEntries == 0) {
 		NoOfMapEntries = 1;
-		MapTable = malloc(sizeof(MAP_ENTRY));
+		MapTable = (MAP_ENTRY*)malloc(sizeof(MAP_ENTRY));
 	} else {
 		NoOfMapEntries += 1;
-		MapTable = realloc(MapTable, sizeof(MAP_ENTRY) * NoOfMapEntries);
+		MapTable = (MAP_ENTRY*)realloc(MapTable, sizeof(MAP_ENTRY) * NoOfMapEntries);
 	}
 	MapTable[NoOfMapEntries - 1].VAddr = Address;
 	strcpy(MapTable[NoOfMapEntries - 1].Label, Label);

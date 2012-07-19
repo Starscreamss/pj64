@@ -933,7 +933,7 @@ LRESULT CALLBACK CheatAddProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 					return TRUE;
 				}
 				CheatLen = strlen(NewCheatName) + strlen(codestring);
-				cheat = malloc(CheatLen + 3);
+				cheat = (char*)malloc(CheatLen + 3);
 				sprintf(cheat,"\"%s\"",NewCheatName);
 
 				strcat(cheat, codestring);
@@ -946,7 +946,7 @@ LRESULT CALLBACK CheatAddProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 				if (cheat) { free(cheat); cheat = NULL; }
 
 				if (validoptions) {
-					cheat = malloc(strlen(optionsstring) + 1);
+					cheat = (char*)malloc(strlen(optionsstring) + 1);
 					strcpy(cheat, optionsstring+1);
 					sprintf(NewCheatName,"Cheat%d_O",CheatNo);
 					_WritePrivateProfileString(Identifier,NewCheatName,cheat,IniFileName);
@@ -955,7 +955,7 @@ LRESULT CALLBACK CheatAddProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 				CheatLen = SendDlgItemMessage(hDlg,IDC_NOTES,WM_GETTEXTLENGTH,0,0) + 5;
 				if (CheatLen > 5) {
-					cheat = malloc(CheatLen);
+					cheat = (char*)malloc(CheatLen);
 					GetDlgItemText(hDlg,IDC_NOTES,cheat,CheatLen);
 					sprintf(NewCheatName,"Cheat%d_N",CheatNo);
 					_WritePrivateProfileString(Identifier,NewCheatName,cheat,IniFileName);
@@ -1026,7 +1026,7 @@ LRESULT CALLBACK CheatEditProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 			
 			//Add Gameshark codes to screen			
 			ReadPos = strrchr(String,'"') + 2;
-			Buffer = malloc(strlen(ReadPos) + MaxGSEntries);
+			Buffer = (char*)malloc(strlen(ReadPos) + MaxGSEntries);
 			strcpy(Buffer,"");
 			do {
 				strncat(Buffer,ReadPos,strchr(ReadPos,',') - ReadPos);
@@ -1045,7 +1045,7 @@ LRESULT CALLBACK CheatEditProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 			_GetPrivateProfileString2(Identifier,CheatName,"",&String,IniFileName);
 			if (strlen(String) > 0) {
 				ReadPos = strchr(String,'$') + 1;
-				Buffer = malloc(strlen(ReadPos) + 2);
+				Buffer = (char*)malloc(strlen(ReadPos) + 2);
 				strcpy(Buffer,"");
 				do {
 					strncat(Buffer,ReadPos,strchr(ReadPos,',') - ReadPos);
@@ -1138,7 +1138,7 @@ LRESULT CALLBACK CheatEditProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 				//Insert New Entries
 				GetDlgItemText(hDlg,IDC_CODE_NAME,NewCheatName,sizeof(NewCheatName));
 				CheatLen = strlen(NewCheatName) + strlen(codestring);
-				cheat = malloc(CheatLen + 3);
+				cheat = (char*)malloc(CheatLen + 3);
 				sprintf(cheat,"\"%s\"",NewCheatName);
 				strcat(cheat, codestring);
 
@@ -1149,7 +1149,7 @@ LRESULT CALLBACK CheatEditProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 				if (cheat) { free(cheat); cheat = NULL; }
 
 				if (validoptions) {
-					cheat = malloc(strlen(optionsstring) + 1);
+					cheat = (char*)malloc(strlen(optionsstring) + 1);
 					strcpy(cheat, optionsstring+1);
 					sprintf(NewCheatName,"Cheat%d_O",CheatNo);
 					_WritePrivateProfileString(Identifier,NewCheatName,cheat,IniFileName);
@@ -1158,7 +1158,7 @@ LRESULT CALLBACK CheatEditProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 				CheatLen = SendDlgItemMessage(hDlg,IDC_NOTES,WM_GETTEXTLENGTH,0,0) + 5;
 				if (CheatLen > 5) {
-					cheat = malloc(CheatLen);
+					cheat = (char*)malloc(CheatLen);
 					GetDlgItemText(hDlg,IDC_NOTES,cheat,CheatLen);
 					sprintf(NewCheatName,"Cheat%d_N",CheatNo);
 					_WritePrivateProfileString(Identifier,NewCheatName,cheat,IniFileName);

@@ -78,7 +78,7 @@ int fGetString2(FILE * File, char **String, BYTE **Data, int * DataSize, int *Le
 
 	if (*DataSize == 0) { 
 		*DataSize = BufferIncrease;
-		*Data = malloc(*DataSize);
+		*Data = (BYTE*)malloc(*DataSize);
 		*Left = 0;
 	}
 
@@ -91,8 +91,8 @@ int fGetString2(FILE * File, char **String, BYTE **Data, int * DataSize, int *Le
 					free(*String); 
 					*String = NULL;
 				}
-				*String = malloc(count + 1);
-				strncpy(*String,*Data,count);
+				*String = (char*)malloc(count + 1);
+				strncpy(*String,(char*)*Data,count);
 				(*String)[count] = 0;
 				*Left -= count + 1;
 				if (*Left > 0) {
@@ -445,7 +445,7 @@ unsigned int _GetPrivateProfileString2(
 		if (strcmp(Input,lpKeyName) != 0) { continue; }
 		len = strlen(&Pos[1]);
 		if (*lpReturnedString) { free(*lpReturnedString); }
-		*lpReturnedString = malloc(len + 1);
+		*lpReturnedString = (char*)malloc(len + 1);
 		strcpy(*lpReturnedString,&Pos[1]);
 		fclose(fInput);
 		if (Input) { free(Input);  Input = NULL; }
@@ -459,7 +459,7 @@ unsigned int _GetPrivateProfileString2(
 GetPrivateProfileString_ReturnDefault2:
 	len = strlen(lpDefault);
 	if (*lpReturnedString) { free(*lpReturnedString); }
-	*lpReturnedString = malloc(len + 1);
+	*lpReturnedString = (char*)malloc(len + 1);
 	strcpy(*lpReturnedString,lpDefault);
 	return len;
 	//return 0;

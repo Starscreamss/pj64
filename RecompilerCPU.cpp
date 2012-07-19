@@ -82,9 +82,9 @@ void _fastcall AddParent(BLOCK_SECTION * Section, BLOCK_SECTION * Parent){
 	}
 
 	if (NoOfParents == 1) {
-		Section->ParentSection = malloc((NoOfParents + 1)*sizeof(void *));
+		Section->ParentSection = (void**)malloc((NoOfParents + 1)*sizeof(void *));
 	} else {
-		Section->ParentSection = realloc(Section->ParentSection,(NoOfParents + 1)*sizeof(void *));
+		Section->ParentSection = (void**)realloc(Section->ParentSection,(NoOfParents + 1)*sizeof(void *));
 	}
 	Section->ParentSection[NoOfParents - 1] = Parent;
 	Section->ParentSection[NoOfParents] = NULL;
@@ -450,9 +450,9 @@ void CompileExit (DWORD TargetPC, REG_INFO ExitRegSet, int reason, int CompileNo
 	if (!CompileNow) {
 		char String[100];
 		if (BlockInfo.ExitCount == 0) {
-			BlockInfo.ExitInfo = malloc(sizeof(void *));
+			BlockInfo.ExitInfo = (EXIT_INFO*)malloc(sizeof(void *));
 		} else {
-			BlockInfo.ExitInfo = realloc(BlockInfo.ExitInfo,(BlockInfo.ExitCount + 1) * sizeof(void *));
+			BlockInfo.ExitInfo = (EXIT_INFO*)realloc(BlockInfo.ExitInfo,(BlockInfo.ExitCount + 1) * sizeof(void *));
 		}
 		sprintf(String,"Exit_%d",BlockInfo.ExitCount);
 		if (x86Jmp == NULL) { 
@@ -462,7 +462,7 @@ void CompileExit (DWORD TargetPC, REG_INFO ExitRegSet, int reason, int CompileNo
 			ExitThread(0);
 		}
 		x86Jmp(String,0);
-		BlockInfo.ExitInfo[BlockInfo.ExitCount] = malloc(sizeof(EXIT_INFO));
+		BlockInfo.ExitInfo[BlockInfo.ExitCount] = (EXIT_INFO*)malloc(sizeof(EXIT_INFO));
 		BlockInfo.ExitInfo[BlockInfo.ExitCount]->TargetPC = TargetPC;
 		BlockInfo.ExitInfo[BlockInfo.ExitCount]->ExitRegSet = ExitRegSet;
 		BlockInfo.ExitInfo[BlockInfo.ExitCount]->reason = reason;
@@ -686,7 +686,7 @@ void _fastcall CreateSectionLinkage (BLOCK_SECTION * Section) {
 			}
 			if (*TargetSection[count] == NULL) {
 				BlockInfo.NoOfSections += 1;
-				*TargetSection[count] = malloc(sizeof(BLOCK_SECTION));
+				*TargetSection[count] = (BLOCK_SECTION*)malloc(sizeof(BLOCK_SECTION));
 				InitilzeSection (*TargetSection[count], Section, *TargetPC[count], BlockInfo.NoOfSections);
 				CreateSectionLinkage(*TargetSection[count]);
 			} else {
@@ -1646,7 +1646,7 @@ void FreeSection (BLOCK_SECTION * Section, BLOCK_SECTION * Parent) {
 				} else {
 					memmove(&Section->ParentSection[count],&Section->ParentSection[count + 1],
 						sizeof(void*) * (NoOfParents - count));				
-					Section->ParentSection = realloc(Section->ParentSection,NoOfParents*sizeof(void *));
+					Section->ParentSection = (void**)realloc(Section->ParentSection,NoOfParents*sizeof(void *));
 				}
 				NoOfParents -= 1;
 			}
