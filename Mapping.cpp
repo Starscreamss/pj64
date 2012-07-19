@@ -145,7 +145,7 @@ void OpenZipMapFile(char * FileName) {
 				DWORD dwRead;
 				HGLOBAL hMem;
 
-				MapFileContents = GlobalAlloc(GPTR,info.uncompressed_size + 1);	
+				MapFileContents = (BYTE*)GlobalAlloc(GPTR,info.uncompressed_size + 1);	
 
 			    if (MapFileContents == NULL) {
 					unzCloseCurrentFile(file);
@@ -195,7 +195,7 @@ int OpenMapFile(char * FileName) {
 	if (hFile == INVALID_HANDLE_VALUE) { return FALSE; }
 	
 	RomFileSize = GetFileSize(hFile,NULL);
-	MapFileContents = GlobalAlloc(GPTR,RomFileSize + 1);	
+	MapFileContents = (BYTE*)GlobalAlloc(GPTR,RomFileSize + 1);	
 
     if (MapFileContents == NULL) {
 		DisplayError("Not enough memory for Map File Contents");
@@ -230,8 +230,8 @@ int OpenMapFile(char * FileName) {
 	return TRUE;
 }
 
-int ProcessCODFile(BYTE * File, DWORD FileLen) {
-	BYTE * CurrentPos = File;
+int ProcessCODFile(char * File, DWORD FileLen) {
+	char * CurrentPos = File;
 	char Label[40];
 	DWORD Address;
 	int Length;
@@ -267,7 +267,7 @@ int ProcessCODFile(BYTE * File, DWORD FileLen) {
 }
 
 int ProcessMapFile(BYTE * File, DWORD FileLen) {
-	if (ProcessCODFile(File,FileLen)) { return TRUE; }
+	if (ProcessCODFile((char*)File,FileLen)) { return TRUE; }
 	return FALSE;
 }
 

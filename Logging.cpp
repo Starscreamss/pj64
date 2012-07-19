@@ -53,7 +53,7 @@ void EnterLogOptions(HWND hwndOwner) {
     psp[0].dwFlags = PSP_USETITLE;
     psp[0].hInstance = hInst;
     psp[0].pszTemplate = MAKEINTRESOURCE(IDD_Logging_Registers);
-    psp[0].pfnDlgProc = LogRegProc;
+    psp[0].pfnDlgProc = (DLGPROC)LogRegProc; //TODO - is this cast safe?
     psp[0].pszTitle = "Registers";
     psp[0].lParam = 0;
     psp[0].pfnCallback = NULL;
@@ -62,7 +62,7 @@ void EnterLogOptions(HWND hwndOwner) {
     psp[1].dwFlags = PSP_USETITLE;
     psp[1].hInstance = hInst;
     psp[1].pszTemplate = MAKEINTRESOURCE(IDD_Logging_PifRam);
-    psp[1].pfnDlgProc = LogPifProc;
+    psp[1].pfnDlgProc = (DLGPROC)LogPifProc;  //TODO - is this cast safe?
     psp[1].pszTitle = "Pif Ram";
     psp[1].lParam = 0;
     psp[1].pfnCallback = NULL;
@@ -71,7 +71,7 @@ void EnterLogOptions(HWND hwndOwner) {
     psp[2].dwFlags = PSP_USETITLE;
     psp[2].hInstance = hInst;
     psp[2].pszTemplate = MAKEINTRESOURCE(IDD_Logging_General);
-    psp[2].pfnDlgProc = LogGeneralProc;
+    psp[2].pfnDlgProc = (DLGPROC)LogGeneralProc;  //TODO - is this cast safe?
     psp[2].pszTitle = "General";
     psp[2].lParam = 0;
     psp[2].pfnCallback = NULL;
