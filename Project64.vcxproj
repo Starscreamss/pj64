@@ -216,8 +216,8 @@
     </ClCompile>
     <ClCompile Include="Profiling.cpp" />
     <ClCompile Include="RomBrowser.cpp" />
-    <ClCompile Include="Settings Api.cpp" />
     <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="SettingsApi.cpp" />
     <ClCompile Include="SyncCPU.cpp" />
     <ClCompile Include="TLBDisplay.cpp" />
     <ClCompile Include="Win32Timer.cpp" />
@@ -260,8 +260,8 @@
     <ClInclude Include="Profiling.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RomBrowser.h" />
-    <ClInclude Include="Settings Api.h" />
     <ClInclude Include="Settings.h" />
+    <ClInclude Include="SettingsApi.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="SyncCPU.h" />
     <ClInclude Include="tlbDisplay.h" />

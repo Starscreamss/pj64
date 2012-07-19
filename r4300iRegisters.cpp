@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include "main.h"
 #include "CPU.h"
-#include "r4300i Registers.h"
+#include "r4300iRegisters.h"
 
 #define GeneralPurpose			1
 #define ControlProcessor0		2

@@ -47,7 +47,6 @@
     <ClCompile Include="Registers.cpp" />
     <ClCompile Include="rom.cpp" />
     <ClCompile Include="RomBrowser.cpp" />
-    <ClCompile Include="Settings Api.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Sram.cpp" />
     <ClCompile Include="TLB.cpp" />
@@ -55,6 +54,7 @@
     <ClCompile Include="X86.cpp" />
     <ClCompile Include="SyncCPU.cpp" />
     <ClCompile Include="TLBDisplay.cpp" />
+    <ClCompile Include="SettingsApi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unzip.h">
@@ -102,7 +102,6 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Rom.h" />
     <ClInclude Include="RomBrowser.h" />
-    <ClInclude Include="Settings Api.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Sram.h" />
     <ClInclude Include="StdAfx.h" />
@@ -111,6 +110,7 @@
     <ClInclude Include="Win32Timer.h" />
     <ClInclude Include="SyncCPU.h" />
     <ClInclude Include="tlbDisplay.h" />
+    <ClInclude Include="SettingsApi.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PJ64.rc">
