@@ -5,17 +5,11 @@
       <UniqueIdentifier>{c1387139-4675-44da-83ed-3360bbbc0568}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
-    <Filter Include="Zlib Source">
-      <UniqueIdentifier>{e2e635fd-1c9e-4a39-a951-137439862422}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Zlib Header">
+    <Filter Include="zipstuff">
       <UniqueIdentifier>{188bf492-5a10-460c-a8f6-2be14d00fb94}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="unzip.c">
-      <Filter>Zlib Source</Filter>
-    </ClCompile>
     <ClCompile Include="x86fpu.cpp" />
     <ClCompile Include="BreakPoints.cpp" />
     <ClCompile Include="Cheat.cpp" />
@@ -55,27 +49,26 @@
     <ClCompile Include="TLBDisplay.cpp" />
     <ClCompile Include="SettingsApi.cpp" />
     <ClCompile Include="Win32Timer.cpp" />
+    <ClCompile Include="unzip.c">
+      <Filter>zipstuff</Filter>
+    </ClCompile>
     <ClCompile Include="zip.c">
-      <Filter>Zlib Source</Filter>
+      <Filter>zipstuff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unzip.h">
-      <Filter>Zlib Header</Filter>
+      <Filter>zipstuff</Filter>
     </ClInclude>
     <ClInclude Include="zconf.h">
-      <Filter>Zlib Header</Filter>
+      <Filter>zipstuff</Filter>
     </ClInclude>
     <ClInclude Include="zip.h">
-      <Filter>Zlib Header</Filter>
-    </ClInclude>
-    <ClInclude Include="zlib.h">
-      <Filter>Zlib Header</Filter>
+      <Filter>zipstuff</Filter>
     </ClInclude>
     <ClInclude Include="BreakPoints.h" />
     <ClInclude Include="X86.h" />
     <ClInclude Include="Cheats.h" />
-    <ClInclude Include="CPU Log.h" />
     <ClInclude Include="CPU.h" />
     <ClInclude Include="Debugger.h" />
     <ClInclude Include="DMA.h" />
@@ -113,6 +106,7 @@
     <ClInclude Include="SyncCPU.h" />
     <ClInclude Include="tlbDisplay.h" />
     <ClInclude Include="SettingsApi.h" />
+    <ClInclude Include="CPULog.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PJ64.rc">
@@ -120,18 +114,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="contract.ico">
-      <Filter>Resource Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="expand.ico">
-      <Filter>Resource Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ico00001.ico">
-      <Filter>Resource Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="icon1.ico">
-      <Filter>Resource Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="left.ico">
       <Filter>Resource Files</Filter>
     </CustomBuild>
