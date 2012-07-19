@@ -100,7 +100,7 @@ enum TV_CHECK_STATE{
 	TV_STATE_CLEAR,
 	TV_STATE_CHECKED,
 	TV_STATE_INDETERMINATE,
-} DialogState;
+};
 
 int MinSizeDlg;
 int MaxSizeDlg;
@@ -1523,7 +1523,7 @@ char * LineFeed = "\n";
 		if (strcmp(Identifier,CurrentSection) != 0) { 
 			Fpos = ftell(fInput) - DataLeft;
 		}
-		result = fGetString2(fInput,&Input,&Data,&DataLen,&DataLeft);
+		result = fGetString2(fInput,&Input,(BYTE**)&Data,&DataLen,&DataLeft);
 		if (result <= 1) { continue; }
 		
 		Pos = Input;
@@ -1937,7 +1937,7 @@ LRESULT CALLBACK ManageCheatsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM l
 	static RECT rcList;
 	static RECT rcAdd;
 	HANDLE hIcon;
-	HANDLE hStateButton;
+	HWND hStateButton;
 
 	switch (uMsg) {
 	case WM_INITDIALOG:
