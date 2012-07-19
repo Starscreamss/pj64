@@ -4934,8 +4934,8 @@ void Compile_R4300i_COP0_CO_ERET( BLOCK_SECTION * Section) {
 void Compile_R4300i_UnknownOpcode (BLOCK_SECTION * Section) {
 	CPU_Message("  %X Unhandled Opcode: %s",Section->CompilePC, R4300iOpcodeName(Opcode.Hex,Section->CompilePC));
 
-	FreeSection(Section->ContinueSection,Section);
-	FreeSection(Section->JumpSection,Section);
+	FreeSection((BLOCK_SECTION*)Section->ContinueSection,Section);
+	FreeSection((BLOCK_SECTION*)Section->JumpSection,Section);
 	BlockCycleCount -= CountPerOp;
 	BlockRandomModifier -= 1;
 	MoveConstToVariable(Section->CompilePC,&PROGRAM_COUNTER,"PROGRAM_COUNTER");
