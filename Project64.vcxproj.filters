@@ -55,6 +55,9 @@
     <ClCompile Include="TLBDisplay.cpp" />
     <ClCompile Include="SettingsApi.cpp" />
     <ClCompile Include="Win32Timer.cpp" />
+    <ClCompile Include="zip.c">
+      <Filter>Zlib Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unzip.h">
@@ -104,7 +107,6 @@
     <ClInclude Include="RomBrowser.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Sram.h" />
-    <ClInclude Include="StdAfx.h" />
     <ClInclude Include="tlb.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Win32Timer.h" />
@@ -145,6 +147,5 @@
     <CustomBuild Include="tri-state.bmp">
       <Filter>Resource Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="about.htm" />
   </ItemGroup>
 </Project>

@@ -241,6 +241,7 @@
     <ClCompile Include="X86.cpp" />
     <ClCompile Include="Language.cpp" />
     <ClCompile Include="x86fpu.cpp" />
+    <ClCompile Include="zip.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BreakPoints.h" />
@@ -263,7 +264,6 @@
     <ClInclude Include="RomBrowser.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="SettingsApi.h" />
-    <ClInclude Include="StdAfx.h" />
     <ClInclude Include="SyncCPU.h" />
     <ClInclude Include="tlbDisplay.h" />
     <ClInclude Include="Types.h" />
@@ -300,7 +300,6 @@
     <CustomBuild Include="pj64.ico" />
     <CustomBuild Include="right.ico" />
     <CustomBuild Include="tri-state.bmp" />
-    <CustomBuild Include="about.htm" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PJ64.rc" />
