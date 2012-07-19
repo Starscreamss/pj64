@@ -522,7 +522,7 @@ BOOL LoadRomHeader ( void ) {
 		ReadFile(hFile,RomHeader,sizeof(RomHeader),&dwRead,NULL);		
 		CloseHandle( hFile ); 		
 	}
-	ByteSwapRom(RomHeader,sizeof(RomHeader));
+	ByteSwapRom((BYTE*)RomHeader,sizeof(RomHeader));
 	memcpy(&RomName[0],&RomHeader[0x20],20);
 	for( count = 0 ; count < 20; count += 4 ) {
 		RomName[count] ^= RomName[count+3];
@@ -592,7 +592,7 @@ void LoadRomOptions ( void ) {
 	if (CountPerOp < 1)  { CountPerOp = Default_CountPerOp; }
 	if (CountPerOp > 6)  { CountPerOp = Default_CountPerOp; }
 	
-	SaveUsing = RomSaveUsing;
+	SaveUsing = (SaveType)RomSaveUsing;
 	SelfModCheck = SystemSelfModCheck;
 	if (RomSelfMod != ModCode_Default) { SelfModCheck = RomSelfMod; }
 	UseTlb = RomUseTlb;

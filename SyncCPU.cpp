@@ -271,7 +271,7 @@ void StartSyncCPU (void ) {
 			}
 			if (NextInstruction == DELAY_SLOT) {
 				__try {
-					Block = *(DelaySlotTable + (Addr >> 12));
+					Block = (BYTE*)*(DelaySlotTable + (Addr >> 12));
 				} __except(EXCEPTION_EXECUTE_HANDLER) {
 					DisplayError("Executing Delay Slot from non maped space");
 					ExitThread(0);
@@ -289,7 +289,7 @@ void StartSyncCPU (void ) {
 				continue;
 			}
 			__try {
-				Block = *(JumpTable + (Addr >> 2));
+				Block = (BYTE*)*(JumpTable + (Addr >> 2));
 			} __except(EXCEPTION_EXECUTE_HANDLER) {
 				DisplayError(GS(MSG_NONMAPPED_SPACE));
 				ExitThread(0);
@@ -580,10 +580,10 @@ int Sync_MemoryFilter( DWORD dwExptCode, LPEXCEPTION_POINTERS lpEP) {
 	}
 	exRec = *lpEP->ExceptionRecord;
 
-    if ((int)((char *)lpEP->ExceptionRecord->ExceptionInformation[1] - N64MEM) < 0) {
+    if ((int)((char *)lpEP->ExceptionRecord->ExceptionInformation[1] - (char*)N64MEM) < 0) {
 		return EXCEPTION_CONTINUE_SEARCH;
 	}
-    if ((int)((char *)lpEP->ExceptionRecord->ExceptionInformation[1] - N64MEM) > 0x1FFFFFFF) {
+    if ((int)((char *)lpEP->ExceptionRecord->ExceptionInformation[1] - (char*)N64MEM) > 0x1FFFFFFF) {
 		return EXCEPTION_CONTINUE_SEARCH;
 	}
 	

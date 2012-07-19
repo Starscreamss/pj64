@@ -350,7 +350,7 @@ void SetupPlugins (HWND hWnd) {
 		GfxInfo.CheckInterrupts = CheckInterrupts;
 		GfxInfo.hStatusBar = hStatusWnd;
 		GfxInfo.hWnd = hWnd;
-		GfxInfo.HEADER = RomHeader;
+		GfxInfo.HEADER = (BYTE*)RomHeader;
 		GfxInfo.RDRAM = N64MEM;
 		GfxInfo.DMEM = DMEM;
 		GfxInfo.IMEM = IMEM;
@@ -401,7 +401,7 @@ void SetupPlugins (HWND hWnd) {
 		AudioInfo.hwnd = hWnd;
 		AudioInfo.hinst = hInst;
 		AudioInfo.MemoryBswaped = TRUE;
-		AudioInfo.HEADER = RomHeader;
+		AudioInfo.HEADER = (BYTE*)RomHeader;
 		AudioInfo.RDRAM = N64MEM;
 		AudioInfo.DMEM = DMEM;
 		AudioInfo.IMEM = IMEM;
@@ -548,7 +548,7 @@ void SetupPlugins (HWND hWnd) {
 		if (ContVersion == 0x0101) {
 			CONTROL_INFO ControlInfo;
 			ControlInfo.Controls = Controllers;
-			ControlInfo.HEADER = RomHeader;
+			ControlInfo.HEADER = (BYTE*)RomHeader;
 			ControlInfo.hinst = hInst;
 			ControlInfo.hMainWindow = hWnd;
 			ControlInfo.MemoryBswaped = TRUE;
@@ -599,9 +599,9 @@ void SetupPluginScreen (HWND hDlg) {
 			if (FindNextFile(hFind,&FindData) == 0) { return; }
 			continue;
 		}
-		GetDllInfo = (void (__cdecl *)(PLUGIN_INFO *))GetProcAddress( hLib, "GetDllInfo" );
+		GetDllInfo = (void (__cdecl *)(PLUGIN_INFO *))GetProcAddress( (HMODULE)hLib, "GetDllInfo" );
 		if (GetDllInfo == NULL) {
-			FreeLibrary(hLib);
+			FreeLibrary((HMODULE)hLib);
 			if (FindNextFile(hFind,&FindData) == 0) { return; }
 			continue; 
 		}
@@ -609,7 +609,7 @@ void SetupPluginScreen (HWND hDlg) {
 		if (!ValidPluginVersion(&PluginInfo) || 
 			(PluginInfo.Type != PLUGIN_TYPE_CONTROLLER && PluginInfo.MemoryBswaped == FALSE))
 		{
-			FreeLibrary(hLib);
+			FreeLibrary((HMODULE)hLib);
 			if (FindNextFile(hFind,&FindData) == 0) { return; }
 			continue;
 		}
@@ -634,10 +634,10 @@ void SetupPluginScreen (HWND hDlg) {
 			SendMessage(GetDlgItem(hDlg,GFX_LIST),CB_SETITEMDATA ,(WPARAM)index, (LPARAM)PluginCount);		
 			if(_stricmp(GfxDLL,PluginNames[PluginCount]) == 0) {
 				SendMessage(GetDlgItem(hDlg,GFX_LIST),CB_SETCURSEL,(WPARAM)index,(LPARAM)0);
-				GFXDllAbout = (void (__cdecl *)(HWND))GetProcAddress( hLib, "DllAbout" );
+				GFXDllAbout = (void (__cdecl *)(HWND))GetProcAddress( (HMODULE)hLib, "DllAbout" );
 				EnableWindow(GetDlgItem(hDlg,GFX_ABOUT),GFXDllAbout != NULL ? TRUE:FALSE);
 			} else {
-				FreeLibrary(hLib);
+				FreeLibrary((HMODULE)hLib);
 			}
 			break;
 		case PLUGIN_TYPE_AUDIO:
@@ -645,10 +645,10 @@ void SetupPluginScreen (HWND hDlg) {
 			SendMessage(GetDlgItem(hDlg,AUDIO_LIST),CB_SETITEMDATA ,(WPARAM)index, (LPARAM)PluginCount);		
 			if(_stricmp(AudioDLL,PluginNames[PluginCount]) == 0) {
 				SendMessage(GetDlgItem(hDlg,AUDIO_LIST),CB_SETCURSEL,(WPARAM)index,(LPARAM)0);
-				AiDllAbout = (void (__cdecl *)(HWND))GetProcAddress( hLib, "DllAbout" );
+				AiDllAbout = (void (__cdecl *)(HWND))GetProcAddress( (HMODULE)hLib, "DllAbout" );
 				EnableWindow(GetDlgItem(hDlg,AUDIO_ABOUT),AiDllAbout != NULL ? TRUE:FALSE);
 			} else {
-				FreeLibrary(hLib);
+				FreeLibrary((HMODULE)hLib);
 			}
 			break;
 		case PLUGIN_TYPE_CONTROLLER:
@@ -656,10 +656,10 @@ void SetupPluginScreen (HWND hDlg) {
 			SendMessage(GetDlgItem(hDlg,CONT_LIST),CB_SETITEMDATA ,(WPARAM)index, (LPARAM)PluginCount);		
 			if(_stricmp(ControllerDLL,PluginNames[PluginCount]) == 0) {
 				SendMessage(GetDlgItem(hDlg,CONT_LIST),CB_SETCURSEL,(WPARAM)index,(LPARAM)0);
-				ContDllAbout = (void (__cdecl *)(HWND))GetProcAddress( hLib, "DllAbout" );
+				ContDllAbout = (void (__cdecl *)(HWND))GetProcAddress( (HMODULE)hLib, "DllAbout" );
 				EnableWindow(GetDlgItem(hDlg,CONT_ABOUT),ContDllAbout != NULL ? TRUE:FALSE);
 			} else {
-				FreeLibrary(hLib);
+				FreeLibrary((HMODULE)hLib);
 			}
 			break;
 		}

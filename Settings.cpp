@@ -229,19 +229,19 @@ BOOL CALLBACK DefaultOptionsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lP
 		SetFlagControl(hDlg,&UseIni, IDC_USEINI, ADVANCE_OVERWRITE);
 		SetFlagControl(hDlg,&AutoZip, IDC_ZIP, ADVANCE_COMPRESS);
 
-		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_INTERPTER,CPU_Interpreter,&SystemCPU_Type);
-		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_RECOMPILER,CPU_Recompiler,&SystemCPU_Type);
-		if (HaveDebugger) { AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_SYNC,CPU_SyncCores,&SystemCPU_Type); }
+		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_INTERPTER,CPU_Interpreter,(int*)&SystemCPU_Type);
+		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_RECOMPILER,CPU_Recompiler,(int*)&SystemCPU_Type);
+		if (HaveDebugger) { AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_SYNC,CPU_SyncCores,(int*)&SystemCPU_Type); }
 
-		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_NONE,ModCode_None,&SystemSelfModCheck);
-		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CACHE,ModCode_Cache,&SystemSelfModCheck);
-		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_PROECTED,ModCode_ProtectedMemory,&SystemSelfModCheck);
-		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHECK_MEM,ModCode_CheckMemoryCache,&SystemSelfModCheck);
-		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHANGE_MEM,ModCode_ChangeMemory,&SystemSelfModCheck);
-		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHECK_ADV,ModCode_CheckMemory2,&SystemSelfModCheck);
+		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_NONE,ModCode_None,(int*)&SystemSelfModCheck);
+		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CACHE,ModCode_Cache,(int*)&SystemSelfModCheck);
+		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_PROECTED,ModCode_ProtectedMemory,(int*)&SystemSelfModCheck);
+		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHECK_MEM,ModCode_CheckMemoryCache,(int*)&SystemSelfModCheck);
+		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHANGE_MEM,ModCode_ChangeMemory,(int*)&SystemSelfModCheck);
+		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHECK_ADV,ModCode_CheckMemory2,(int*)&SystemSelfModCheck);
 
-		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_4MB,0x400000,&SystemRdramSize);
-		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_8MB,0x800000,&SystemRdramSize);
+		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_4MB,0x400000,(int*)&SystemRdramSize);
+		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_8MB,0x800000,(int*)&SystemRdramSize);
 
 		AddDropDownItem(hDlg,IDC_ABL,ABL_ON,TRUE,&SystemABL);
 		AddDropDownItem(hDlg,IDC_ABL,ABL_OFF,FALSE,&SystemABL);
@@ -590,7 +590,7 @@ BOOL CALLBACK PluginSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 				strcat(Plugin,PluginNames[index]);
 				hLib = LoadLibrary(Plugin);		
 				if (hLib == NULL) { DisplayError("%s %s",GS(MSG_FAIL_LOAD_PLUGIN),Plugin); }
-				GFXDllAbout = (void (__cdecl *)(HWND))GetProcAddress( hLib, "DllAbout" );
+				GFXDllAbout = (void (__cdecl *)(HWND))GetProcAddress( (HMODULE)hLib, "DllAbout" );
 				EnableWindow(GetDlgItem(hDlg,GFX_ABOUT),GFXDllAbout != NULL ? TRUE:FALSE);
 			}
 			break;
@@ -604,7 +604,7 @@ BOOL CALLBACK PluginSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 				strcat(Plugin,PluginNames[index]);
 				hLib = LoadLibrary(Plugin);		
 				if (hLib == NULL) { DisplayError("%s %s",GS(MSG_FAIL_LOAD_PLUGIN),Plugin); }
-				AiDllAbout = (void (__cdecl *)(HWND))GetProcAddress( hLib, "DllAbout" );
+				AiDllAbout = (void (__cdecl *)(HWND))GetProcAddress( (HMODULE)hLib, "DllAbout" );
 				EnableWindow(GetDlgItem(hDlg,GFX_ABOUT),GFXDllAbout != NULL ? TRUE:FALSE);
 			}
 			break;
@@ -618,7 +618,7 @@ BOOL CALLBACK PluginSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPar
 				strcat(Plugin,PluginNames[index]);
 				hLib = LoadLibrary(Plugin);		
 				if (hLib == NULL) { DisplayError("%s %s",GS(MSG_FAIL_LOAD_PLUGIN),Plugin); }
-				ContDllAbout = (void (__cdecl *)(HWND))GetProcAddress( hLib, "DllAbout" );
+				ContDllAbout = (void (__cdecl *)(HWND))GetProcAddress( (HMODULE)hLib, "DllAbout" );
 				EnableWindow(GetDlgItem(hDlg,CONT_ABOUT),ContDllAbout != NULL ? TRUE:FALSE);
 			}
 			break;
@@ -956,47 +956,47 @@ BOOL CALLBACK RomSettingsProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		SetDlgItemText(hDlg,IDC_SAVE_TYPE_TEXT,GS(ROM_SAVE_TYPE));
 		SetDlgItemText(hDlg,IDC_COUNTFACT_TEXT,GS(ROM_COUNTER_FACTOR));
 
-		AddDropDownItem(hDlg,IDC_CPU_TYPE,ROM_DEFAULT,CPU_Default,&RomCPUType);
-		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_INTERPTER,CPU_Interpreter,&RomCPUType);
-		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_RECOMPILER,CPU_Recompiler,&RomCPUType);
-		if (HaveDebugger) { AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_SYNC,CPU_SyncCores,&RomCPUType); }
+		AddDropDownItem(hDlg,IDC_CPU_TYPE,ROM_DEFAULT,CPU_Default,(int*)&RomCPUType);
+		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_INTERPTER,CPU_Interpreter,(int*)&RomCPUType);
+		AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_RECOMPILER,CPU_Recompiler,(int*)&RomCPUType);
+		if (HaveDebugger) { AddDropDownItem(hDlg,IDC_CPU_TYPE,CORE_SYNC,CPU_SyncCores,(int*)&RomCPUType); }
 
-		AddDropDownItem(hDlg,IDC_SELFMOD,ROM_DEFAULT,ModCode_Default,&RomSelfMod);
-		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_NONE,ModCode_None,&RomSelfMod);
-		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CACHE,ModCode_Cache,&RomSelfMod);
-		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_PROECTED,ModCode_ProtectedMemory,&RomSelfMod);
-		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHECK_MEM,ModCode_CheckMemoryCache,&RomSelfMod);
-		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHANGE_MEM,ModCode_ChangeMemory,&RomSelfMod);
-		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHECK_ADV,ModCode_CheckMemory2,&RomSelfMod);
+		AddDropDownItem(hDlg,IDC_SELFMOD,ROM_DEFAULT,ModCode_Default,(int*)&RomSelfMod);
+		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_NONE,ModCode_None,(int*)&RomSelfMod);
+		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CACHE,ModCode_Cache,(int*)&RomSelfMod);
+		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_PROECTED,ModCode_ProtectedMemory,(int*)&RomSelfMod);
+		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHECK_MEM,ModCode_CheckMemoryCache,(int*)&RomSelfMod);
+		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHANGE_MEM,ModCode_ChangeMemory,(int*)&RomSelfMod);
+		AddDropDownItem(hDlg,IDC_SELFMOD,SMCM_CHECK_ADV,ModCode_CheckMemory2,(int*)&RomSelfMod);
 
-		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,ROM_DEFAULT,-1,&RomRamSize);
-		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_4MB,0x400000,&RomRamSize);
-		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_8MB,0x800000,&RomRamSize);
+		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,ROM_DEFAULT,-1,(int*)&RomRamSize);
+		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_4MB,0x400000,(int*)&RomRamSize);
+		AddDropDownItem(hDlg,IDC_RDRAM_SIZE,RDRAM_8MB,0x800000,(int*)&RomRamSize);
 
-		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ROM_DEFAULT,-1,&RomUseLinking);
-		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ABL_ON,0,&RomUseLinking);
-		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ABL_OFF,1,&RomUseLinking);
+		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ROM_DEFAULT,-1,(int*)&RomUseLinking);
+		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ABL_ON,0,(int*)&RomUseLinking);
+		AddDropDownItem(hDlg,IDC_BLOCK_LINKING,ABL_OFF,1,(int*)&RomUseLinking);
 
-		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_FIRST_USED,Auto,&RomSaveUsing);
-		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_4K_EEPROM,Eeprom_4K,&RomSaveUsing);
-		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_16K_EEPROM,Eeprom_16K,&RomSaveUsing);
-		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_SRAM,Sram,&RomSaveUsing);
-		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_FLASHRAM,FlashRam,&RomSaveUsing);
+		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_FIRST_USED,Auto,(int*)&RomSaveUsing);
+		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_4K_EEPROM,Eeprom_4K,(int*)&RomSaveUsing);
+		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_16K_EEPROM,Eeprom_16K,(int*)&RomSaveUsing);
+		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_SRAM,Sram,(int*)&RomSaveUsing);
+		AddDropDownItem(hDlg,IDC_SAVE_TYPE,SAVE_FLASHRAM,FlashRam,(int*)&RomSaveUsing);
 
-		AddDropDownItem(hDlg,IDC_COUNTFACT,ROM_DEFAULT,-1,&RomCF);
-		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_1,1,&RomCF);
-		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_2,2,&RomCF);
-		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_3,3,&RomCF);
-		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_4,4,&RomCF);
-		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_5,5,&RomCF);
-		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_6,6,&RomCF);
+		AddDropDownItem(hDlg,IDC_COUNTFACT,ROM_DEFAULT,-1,(int*)&RomCF);
+		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_1,1,(int*)&RomCF);
+		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_2,2,(int*)&RomCF);
+		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_3,3,(int*)&RomCF);
+		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_4,4,(int*)&RomCF);
+		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_5,5,(int*)&RomCF);
+		AddDropDownItem(hDlg,IDC_COUNTFACT,NUMBER_6,6,(int*)&RomCF);
 
-		SetFlagControl(hDlg,&RomUseLargeBuffer, IDC_LARGE_COMPILE_BUFFER, ROM_LARGE_BUFFER);
-		SetFlagControl(hDlg,&RomUseTlb, IDC_USE_TLB, ROM_USE_TLB);
-		SetFlagControl(hDlg,&RomUseCache, IDC_ROM_REGCACHE, ROM_REG_CACHE);
-		SetFlagControl(hDlg,&RomDelaySI, IDC_DELAY_SI, ROM_DELAY_SI);
-		SetFlagControl(hDlg,&RomAudioSignal, IDC_AUDIO_SIGNAL, ROM_AUDIO_SIGNAL);
-		SetFlagControl(hDlg,&RomSPHack, IDC_ROM_SPHACK, ROM_SP_HACK);
+		SetFlagControl(hDlg,(int*)&RomUseLargeBuffer, IDC_LARGE_COMPILE_BUFFER, ROM_LARGE_BUFFER);
+		SetFlagControl(hDlg,(int*)&RomUseTlb, IDC_USE_TLB, ROM_USE_TLB);
+		SetFlagControl(hDlg,(int*)&RomUseCache, IDC_ROM_REGCACHE, ROM_REG_CACHE);
+		SetFlagControl(hDlg,(int*)&RomDelaySI, IDC_DELAY_SI, ROM_DELAY_SI);
+		SetFlagControl(hDlg,(int*)&RomAudioSignal, IDC_AUDIO_SIGNAL, ROM_AUDIO_SIGNAL);
+		SetFlagControl(hDlg,(int*)&RomSPHack, IDC_ROM_SPHACK, ROM_SP_HACK);
 				
 		if (strlen(RomName) == 0) {
 			EnableWindow(GetDlgItem(hDlg,IDC_MEMORY_SIZE_TEXT),FALSE);

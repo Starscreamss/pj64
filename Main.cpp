@@ -1568,10 +1568,10 @@ LRESULT CALLBACK RomInfoProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam
 		sprintf(&String[1],"0x%08X",CRC);
 		SetDlgItemText(hDlg,IDC_INFO_CRC2,String);
 
-		if (GetCicChipID(RomHeader) < 0) { 
+		if (GetCicChipID((BYTE*)RomHeader) < 0) { 
 			sprintf(&String[1],"Unknown");
 		} else {
-			sprintf(&String[1],"CIC-NUS-610%d",GetCicChipID(RomHeader));
+			sprintf(&String[1],"CIC-NUS-610%d",GetCicChipID((BYTE*)RomHeader));
 		}
 		SetDlgItemText(hDlg,IDC_INFO_CIC,String);
 		break;

@@ -243,7 +243,7 @@ void IndexRomDataBase (void) {
 	DataLeft = 0;
 	do {
 		Fpos = ftell(fInput) - DataLeft;
-		result = fGetString2(fInput,&Input,&Data,&DataLen,&DataLeft);
+		result = fGetString2(fInput,&Input,(BYTE**)&Data,&DataLen,&DataLeft);
 		if (result <= 1) { continue; }
 		
 		Pos = Input;
