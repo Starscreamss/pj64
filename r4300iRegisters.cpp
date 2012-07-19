@@ -108,7 +108,7 @@ LRESULT CALLBACK R4300i_Registers_Proc ( HWND, UINT, WPARAM, LPARAM );
 HWND R4300i_Registers_hDlg, hTab, hStatic, hGPR[32], hCP0[32], hFPR[32], hSpecial[6],
 	hRDRam[10], hSP[10], hMI[4], hVI[14], hAI[6], hPI[13], hRI[8], hSI[4];
 int InR4300iRegisterWindow = FALSE;
-FARPROC r4300iRegRefreshProc;
+WNDPROC r4300iRegRefreshProc;
 
 void Create_R4300i_Register_Window ( int Child ) {
 	DWORD ThreadID;
@@ -188,7 +188,7 @@ void PaintR4300iAIPanel (HWND hWnd) {
 	rcBox.bottom = 250;
 	DrawEdge( ps.hdc, &rcBox, EDGE_ETCHED, BF_RECT );
 
-	hOldFont = SelectObject( ps.hdc,
+	hOldFont = (HFONT)SelectObject( ps.hdc,
 	GetStockObject(DEFAULT_GUI_FONT) );
 	OldBkMode = SetBkMode( ps.hdc, TRANSPARENT );
 
@@ -217,7 +217,7 @@ void PaintR4300iCP0Panel (HWND hWnd) {
 	rcBox.bottom = 270;
 	DrawEdge( ps.hdc, &rcBox, EDGE_ETCHED, BF_RECT );
 
-	hOldFont = SelectObject( ps.hdc,
+	hOldFont = (HFONT)SelectObject( ps.hdc,
 		GetStockObject(DEFAULT_GUI_FONT) );
 	OldBkMode = SetBkMode( ps.hdc, TRANSPARENT );
 
@@ -266,7 +266,7 @@ void PaintR4300iFPRPanel (HWND hWnd) {
 	rcBox.bottom = 275;
 	DrawEdge( ps.hdc, &rcBox, EDGE_ETCHED, BF_RECT );
 
-	hOldFont = SelectObject( ps.hdc,
+	hOldFont = (HFONT)SelectObject( ps.hdc,
 	GetStockObject(DEFAULT_GUI_FONT) );
 	OldBkMode = SetBkMode( ps.hdc, TRANSPARENT );	
 
@@ -321,7 +321,7 @@ void PaintR4300iGPRPanel (HWND hWnd) {
 	rcBox.bottom = 275;
 	DrawEdge( ps.hdc, &rcBox, EDGE_ETCHED, BF_RECT );
 
-	hOldFont = SelectObject( ps.hdc,
+	hOldFont = (HFONT)SelectObject( ps.hdc,
 	GetStockObject(DEFAULT_GUI_FONT) );
 	OldBkMode = SetBkMode( ps.hdc, TRANSPARENT );
 
@@ -376,7 +376,7 @@ void PaintR4300iRDRamPanel (HWND hWnd) {
 	rcBox.bottom = 270;
 	DrawEdge( ps.hdc, &rcBox, EDGE_ETCHED, BF_RECT );
 
-	hOldFont = SelectObject( ps.hdc,
+	hOldFont = (HFONT)SelectObject( ps.hdc,
 	GetStockObject(DEFAULT_GUI_FONT) );
 	OldBkMode = SetBkMode( ps.hdc, TRANSPARENT );
 
@@ -409,7 +409,7 @@ void PaintR4300iRIPanel (HWND hWnd) {
 	rcBox.bottom = 215;
 	DrawEdge( ps.hdc, &rcBox, EDGE_ETCHED, BF_RECT );
 
-	hOldFont = SelectObject( ps.hdc,
+	hOldFont = (HFONT)SelectObject( ps.hdc,
 	GetStockObject(DEFAULT_GUI_FONT) );
 	OldBkMode = SetBkMode( ps.hdc, TRANSPARENT );
 
@@ -440,7 +440,7 @@ void PaintR4300iSIPanel (HWND hWnd) {
 	rcBox.bottom = 210;
 	DrawEdge( ps.hdc, &rcBox, EDGE_ETCHED, BF_RECT );
 
-	hOldFont = SelectObject( ps.hdc,
+	hOldFont = (HFONT)SelectObject( ps.hdc,
 	GetStockObject(DEFAULT_GUI_FONT) );
 	OldBkMode = SetBkMode( ps.hdc, TRANSPARENT );
 
@@ -467,7 +467,7 @@ void PaintR4300iSPPanel (HWND hWnd) {
 	rcBox.bottom = 232;
 	DrawEdge( ps.hdc, &rcBox, EDGE_ETCHED, BF_RECT );
 
-	hOldFont = SelectObject( ps.hdc,
+	hOldFont = (HFONT)SelectObject( ps.hdc,
 	GetStockObject(DEFAULT_GUI_FONT) );
 	OldBkMode = SetBkMode( ps.hdc, TRANSPARENT );
 
@@ -500,7 +500,7 @@ void PaintR4300iSpecialPanel (HWND hWnd) {
 	rcBox.bottom = 270;
 	DrawEdge( ps.hdc, &rcBox, EDGE_ETCHED, BF_RECT );
 
-	hOldFont = SelectObject( ps.hdc,
+	hOldFont = (HFONT)SelectObject( ps.hdc,
 	GetStockObject(DEFAULT_GUI_FONT) );
 	OldBkMode = SetBkMode( ps.hdc, TRANSPARENT );
 
@@ -529,7 +529,7 @@ void PaintR4300iMIPanel (HWND hWnd) {
 	rcBox.bottom = 210;
 	DrawEdge( ps.hdc, &rcBox, EDGE_ETCHED, BF_RECT );
 
-	hOldFont = SelectObject( ps.hdc,
+	hOldFont = (HFONT)SelectObject( ps.hdc,
 	GetStockObject(DEFAULT_GUI_FONT) );
 	OldBkMode = SetBkMode( ps.hdc, TRANSPARENT );
 
@@ -556,7 +556,7 @@ void PaintR4300iPIPanel (HWND hWnd) {
 	rcBox.bottom = 270;
 	DrawEdge( ps.hdc, &rcBox, EDGE_ETCHED, BF_RECT );
 
-	hOldFont = SelectObject( ps.hdc, GetStockObject(DEFAULT_GUI_FONT) );
+	hOldFont = (HFONT)SelectObject( ps.hdc, GetStockObject(DEFAULT_GUI_FONT) );
 	OldBkMode = SetBkMode( ps.hdc, TRANSPARENT );
 
 	TextOut( ps.hdc, 95,55,"PI_DRAM_ADDR_REG:",17);
@@ -591,7 +591,7 @@ void PaintR4300iVIPanel (HWND hWnd) {
 	rcBox.bottom = 270;
 	DrawEdge( ps.hdc, &rcBox, EDGE_ETCHED, BF_RECT );
 
-	hOldFont = SelectObject( ps.hdc,GetStockObject(DEFAULT_GUI_FONT) );
+	hOldFont = (HFONT)SelectObject( ps.hdc,GetStockObject(DEFAULT_GUI_FONT) );
 	OldBkMode = SetBkMode( ps.hdc, TRANSPARENT );
 
 	TextOut( ps.hdc, 95,55,"VI_STATUS_REG:",14);
@@ -1000,7 +1000,7 @@ void SetupR4300iRegistersMain (HWND hDlg) {
 	SetupR4300iVIPanel ( hDlg);
 
 	hStatic = CreateWindowEx(0,"STATIC","", WS_CHILD|WS_VISIBLE, 5,6,660,290,hDlg,0,hInst,NULL );
-	r4300iRegRefreshProc = (FARPROC)SetWindowLong( hStatic,GWL_WNDPROC,(long)RefreshR4300iRegProc);
+	r4300iRegRefreshProc = (WNDPROC)SetWindowLong( hStatic,GWL_WNDPROC,(long)RefreshR4300iRegProc);
 
 	ShowR4300iRegisterPanel ( GeneralPurpose );
 	UpdateCurrentR4300iRegisterPanel ();
