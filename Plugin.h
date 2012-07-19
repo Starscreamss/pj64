@@ -300,68 +300,68 @@ typedef union {
 #define PLUGIN_RAW					5 // the controller plugin is passed in raw data
 
 /******** All DLLs have this function **************/
-void (__cdecl *GetDllInfo)             ( PLUGIN_INFO * PluginInfo );
+extern void (__cdecl *GetDllInfo)             ( PLUGIN_INFO * PluginInfo );
 
 /********** RSP DLL: Functions *********************/
-void (__cdecl *GetRspDebugInfo)    ( RSPDEBUG_INFO * DebugInfo );
-void (__cdecl *RSPCloseDLL)        ( void );
-void (__cdecl *RSPDllAbout)        ( HWND hWnd );
-void (__cdecl *RSPDllConfig)       ( HWND hWnd );
-void (__cdecl *RSPRomClosed)       ( void );
-DWORD (__cdecl *DoRspCycles)       ( DWORD );
-void (__cdecl *InitiateRSP_1_0)    ( RSP_INFO_1_0 Rsp_Info, DWORD * Cycles);
-void (__cdecl *InitiateRSP_1_1)    ( RSP_INFO_1_1 Rsp_Info, DWORD * Cycles);
-void (__cdecl *InitiateRSPDebugger)( DEBUG_INFO DebugInfo);
+extern void (__cdecl *GetRspDebugInfo)    ( RSPDEBUG_INFO * DebugInfo );
+extern void (__cdecl *RSPCloseDLL)        ( void );
+extern void (__cdecl *RSPDllAbout)        ( HWND hWnd );
+extern void (__cdecl *RSPDllConfig)       ( HWND hWnd );
+extern void (__cdecl *RSPRomClosed)       ( void );
+extern DWORD (__cdecl *DoRspCycles)       ( DWORD );
+extern void (__cdecl *InitiateRSP_1_0)    ( RSP_INFO_1_0 Rsp_Info, DWORD * Cycles);
+extern void (__cdecl *InitiateRSP_1_1)    ( RSP_INFO_1_1 Rsp_Info, DWORD * Cycles);
+extern void (__cdecl *InitiateRSPDebugger)( DEBUG_INFO DebugInfo);
 
 /********** GFX DLL: Functions *********************/
-void (__cdecl *CaptureScreen)      ( char * );
-void (__cdecl *ChangeWindow)       ( void );
-void (__cdecl *GetGfxDebugInfo)    ( GFXDEBUG_INFO * GFXDebugInfo );
-void (__cdecl *GFXCloseDLL)        ( void );
-void (__cdecl *GFXDllAbout)        ( HWND hParent );
-void (__cdecl *GFXDllConfig)       ( HWND hParent );
-void (__cdecl *GfxRomClosed)       ( void );
-void (__cdecl *GfxRomOpen)         ( void );
-void (__cdecl *DrawScreen)         ( void );
-void (__cdecl *FrameBufferRead)    ( DWORD addr );
-void (__cdecl *FrameBufferWrite)   ( DWORD addr, DWORD Bytes );
-BOOL (__cdecl *InitiateGFX)        ( GFX_INFO Gfx_Info );
-void (__cdecl *InitiateGFXDebugger)( DEBUG_INFO DebugInfo);
-void (__cdecl *MoveScreen)         ( int xpos, int ypos );
-void (__cdecl *ProcessDList)       ( void );
-void (__cdecl *ProcessRDPList)     ( void );
-void (__cdecl *ShowCFB)			   ( void );
-void (__cdecl *UpdateScreen)       ( void );
-void (__cdecl *ViStatusChanged)    ( void );
-void (__cdecl *ViWidthChanged)     ( void );
+extern void (__cdecl *CaptureScreen)      ( char * );
+extern void (__cdecl *ChangeWindow)       ( void );
+extern void (__cdecl *GetGfxDebugInfo)    ( GFXDEBUG_INFO * GFXDebugInfo );
+extern void (__cdecl *GFXCloseDLL)        ( void );
+extern void (__cdecl *GFXDllAbout)        ( HWND hParent );
+extern void (__cdecl *GFXDllConfig)       ( HWND hParent );
+extern void (__cdecl *GfxRomClosed)       ( void );
+extern void (__cdecl *GfxRomOpen)         ( void );
+extern void (__cdecl *DrawScreen)         ( void );
+extern void (__cdecl *FrameBufferRead)    ( DWORD addr );
+extern void (__cdecl *FrameBufferWrite)   ( DWORD addr, DWORD Bytes );
+extern BOOL (__cdecl *InitiateGFX)        ( GFX_INFO Gfx_Info );
+extern void (__cdecl *InitiateGFXDebugger)( DEBUG_INFO DebugInfo);
+extern void (__cdecl *MoveScreen)         ( int xpos, int ypos );
+extern void (__cdecl *ProcessDList)       ( void );
+extern void (__cdecl *ProcessRDPList)     ( void );
+extern void (__cdecl *ShowCFB)			   ( void );
+extern void (__cdecl *UpdateScreen)       ( void );
+extern void (__cdecl *ViStatusChanged)    ( void );
+extern void (__cdecl *ViWidthChanged)     ( void );
 
 /************ Audio DLL: Functions *****************/
-void (__cdecl *AiCloseDLL)       ( void );
-void (__cdecl *AiDacrateChanged) ( int SystemType );
-void (__cdecl *AiLenChanged)     ( void );
-void (__cdecl *AiDllAbout)       ( HWND hParent );
-void (__cdecl *AiDllConfig)      ( HWND hParent );
-void (__cdecl *AiDllTest)        ( HWND hParent );
-DWORD (__cdecl *AiReadLength)    ( void );
-void (__cdecl *AiRomClosed)      ( void );
-void (__cdecl *AiUpdate)         ( BOOL Wait );
-BOOL (__cdecl *InitiateAudio)    ( AUDIO_INFO Audio_Info );
-void (__cdecl *ProcessAList)     ( void );
+extern void (__cdecl *AiCloseDLL)       ( void );
+extern void (__cdecl *AiDacrateChanged) ( int SystemType );
+extern void (__cdecl *AiLenChanged)     ( void );
+extern void (__cdecl *AiDllAbout)       ( HWND hParent );
+extern void (__cdecl *AiDllConfig)      ( HWND hParent );
+extern void (__cdecl *AiDllTest)        ( HWND hParent );
+extern DWORD (__cdecl *AiReadLength)    ( void );
+extern void (__cdecl *AiRomClosed)      ( void );
+extern void (__cdecl *AiUpdate)         ( BOOL Wait );
+extern BOOL (__cdecl *InitiateAudio)    ( AUDIO_INFO Audio_Info );
+extern void (__cdecl *ProcessAList)     ( void );
 
 /********** Controller DLL: Functions **************/
-void (__cdecl *ContCloseDLL)     ( void );
-void (__cdecl *ControllerCommand)( int Control, BYTE * Command );
-void (__cdecl *ContDllAbout)     ( HWND hParent );
-void (__cdecl *ContConfig)       ( HWND hParent );
-void (__cdecl *InitiateControllers_1_0)( HWND hMainWindow, CONTROL Controls[4] );
-void (__cdecl *InitiateControllers_1_1)( CONTROL_INFO ControlInfo );
-void (__cdecl *GetKeys)          ( int Control, BUTTONS * Keys );
-void (__cdecl *ReadController)   ( int Control, BYTE * Command );
-void (__cdecl *ContRomOpen)      ( void );
-void (__cdecl *ContRomClosed)    ( void );
-void (__cdecl *WM_KeyDown)       ( WPARAM wParam, LPARAM lParam );
-void (__cdecl *WM_KeyUp)         ( WPARAM wParam, LPARAM lParam );
-void (__cdecl *RumbleCommand)	 ( int Control, BOOL bRumble );
+extern void (__cdecl *ContCloseDLL)     ( void );
+extern void (__cdecl *ControllerCommand)( int Control, BYTE * Command );
+extern void (__cdecl *ContDllAbout)     ( HWND hParent );
+extern void (__cdecl *ContConfig)       ( HWND hParent );
+extern void (__cdecl *InitiateControllers_1_0)( HWND hMainWindow, CONTROL Controls[4] );
+extern void (__cdecl *InitiateControllers_1_1)( CONTROL_INFO ControlInfo );
+extern void (__cdecl *GetKeys)          ( int Control, BUTTONS * Keys );
+extern void (__cdecl *ReadController)   ( int Control, BYTE * Command );
+extern void (__cdecl *ContRomOpen)      ( void );
+extern void (__cdecl *ContRomClosed)    ( void );
+extern void (__cdecl *WM_KeyDown)       ( WPARAM wParam, LPARAM lParam );
+extern void (__cdecl *WM_KeyUp)         ( WPARAM wParam, LPARAM lParam );
+extern void (__cdecl *RumbleCommand)	 ( int Control, BOOL bRumble );
 
 /********** Plugin: Functions *********************/
 void GetPluginDir        ( char * Directory );

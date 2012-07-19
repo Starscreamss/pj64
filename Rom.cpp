@@ -188,7 +188,7 @@ BOOL LoadDataFromRomFile(char * FileName,BYTE * Data,int DataLen, int * RomSize)
 	BYTE Test[4];
 	int count;
 
-	if (strnicmp(&FileName[strlen(FileName)-4], ".ZIP",4) == 0 ){ 
+	if (_strnicmp(&FileName[strlen(FileName)-4], ".ZIP",4) == 0 ){ 
 		int len, port = 0, FoundRom;
 	    unz_file_info info;
 		char zname[132];
@@ -447,7 +447,7 @@ BOOL LoadRomHeader ( void ) {
 	BYTE Test[4];
 	int count;
 
-	if (strnicmp(&CurrentFileName[strlen(CurrentFileName)-4], ".ZIP",4) == 0 ){ 
+	if (_strnicmp(&CurrentFileName[strlen(CurrentFileName)-4], ".ZIP",4) == 0 ){ 
 		int port = 0, FoundRom;
 	    unz_file_info info;
 		char zname[132];
@@ -791,7 +791,7 @@ void OpenChosenFile ( void ) {
 #endif
 	SetNewFileDirectory();
 	strcpy(MapFile,CurrentFileName);
-	if (strnicmp(&CurrentFileName[strlen(CurrentFileName)-4], ".ZIP",4) == 0 ){ 
+	if (_strnicmp(&CurrentFileName[strlen(CurrentFileName)-4], ".ZIP",4) == 0 ){ 
 		int len, port = 0, FoundRom;
 	    unz_file_info info;
 		char zname[132];

@@ -32,6 +32,71 @@
 #include "settings.h"
 #include "resource.h"
 
+//plugin function pointers
+void (__cdecl *GetDllInfo)             ( PLUGIN_INFO * PluginInfo );
+
+/********** RSP DLL: Functions *********************/
+void (__cdecl *GetRspDebugInfo)    ( RSPDEBUG_INFO * DebugInfo );
+void (__cdecl *RSPCloseDLL)        ( void );
+void (__cdecl *RSPDllAbout)        ( HWND hWnd );
+void (__cdecl *RSPDllConfig)       ( HWND hWnd );
+void (__cdecl *RSPRomClosed)       ( void );
+DWORD (__cdecl *DoRspCycles)       ( DWORD );
+void (__cdecl *InitiateRSP_1_0)    ( RSP_INFO_1_0 Rsp_Info, DWORD * Cycles);
+void (__cdecl *InitiateRSP_1_1)    ( RSP_INFO_1_1 Rsp_Info, DWORD * Cycles);
+void (__cdecl *InitiateRSPDebugger)( DEBUG_INFO DebugInfo);
+
+/********** GFX DLL: Functions *********************/
+void (__cdecl *CaptureScreen)      ( char * );
+void (__cdecl *ChangeWindow)       ( void );
+void (__cdecl *GetGfxDebugInfo)    ( GFXDEBUG_INFO * GFXDebugInfo );
+void (__cdecl *GFXCloseDLL)        ( void );
+void (__cdecl *GFXDllAbout)        ( HWND hParent );
+void (__cdecl *GFXDllConfig)       ( HWND hParent );
+void (__cdecl *GfxRomClosed)       ( void );
+void (__cdecl *GfxRomOpen)         ( void );
+void (__cdecl *DrawScreen)         ( void );
+void (__cdecl *FrameBufferRead)    ( DWORD addr );
+void (__cdecl *FrameBufferWrite)   ( DWORD addr, DWORD Bytes );
+BOOL (__cdecl *InitiateGFX)        ( GFX_INFO Gfx_Info );
+void (__cdecl *InitiateGFXDebugger)( DEBUG_INFO DebugInfo);
+void (__cdecl *MoveScreen)         ( int xpos, int ypos );
+void (__cdecl *ProcessDList)       ( void );
+void (__cdecl *ProcessRDPList)     ( void );
+void (__cdecl *ShowCFB)			   ( void );
+void (__cdecl *UpdateScreen)       ( void );
+void (__cdecl *ViStatusChanged)    ( void );
+void (__cdecl *ViWidthChanged)     ( void );
+
+/************ Audio DLL: Functions *****************/
+void (__cdecl *AiCloseDLL)       ( void );
+void (__cdecl *AiDacrateChanged) ( int SystemType );
+void (__cdecl *AiLenChanged)     ( void );
+void (__cdecl *AiDllAbout)       ( HWND hParent );
+void (__cdecl *AiDllConfig)      ( HWND hParent );
+void (__cdecl *AiDllTest)        ( HWND hParent );
+DWORD (__cdecl *AiReadLength)    ( void );
+void (__cdecl *AiRomClosed)      ( void );
+void (__cdecl *AiUpdate)         ( BOOL Wait );
+BOOL (__cdecl *InitiateAudio)    ( AUDIO_INFO Audio_Info );
+void (__cdecl *ProcessAList)     ( void );
+
+/********** Controller DLL: Functions **************/
+void (__cdecl *ContCloseDLL)     ( void );
+void (__cdecl *ControllerCommand)( int Control, BYTE * Command );
+void (__cdecl *ContDllAbout)     ( HWND hParent );
+void (__cdecl *ContConfig)       ( HWND hParent );
+void (__cdecl *InitiateControllers_1_0)( HWND hMainWindow, CONTROL Controls[4] );
+void (__cdecl *InitiateControllers_1_1)( CONTROL_INFO ControlInfo );
+void (__cdecl *GetKeys)          ( int Control, BUTTONS * Keys );
+void (__cdecl *ReadController)   ( int Control, BYTE * Command );
+void (__cdecl *ContRomOpen)      ( void );
+void (__cdecl *ContRomClosed)    ( void );
+void (__cdecl *WM_KeyDown)       ( WPARAM wParam, LPARAM lParam );
+void (__cdecl *WM_KeyUp)         ( WPARAM wParam, LPARAM lParam );
+void (__cdecl *RumbleCommand)	 ( int Control, BOOL bRumble );
+//--------------------------------------
+
 char RspDLL[100], GfxDLL[100], AudioDLL[100],ControllerDLL[100], * PluginNames[MaxDlls];
 HINSTANCE hAudioDll, hControllerDll, hGfxDll, hRspDll;
 DWORD PluginCount, RspTaskValue, AudioIntrReg;
