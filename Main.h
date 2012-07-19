@@ -40,6 +40,20 @@ extern "C" {
 #include "rombrowser.h"
 #include "Language.h"
 
+#ifdef _MSC_VER
+	typedef __int8 s8;
+	typedef unsigned __int8 u8;
+	typedef __int16 s16;
+	typedef unsigned __int16 u16;
+	typedef __int32 s32;
+	typedef unsigned __int32 u32;
+	typedef __int64 s64;
+	typedef unsigned __int64 u64;
+	typedef float f32;
+	typedef double f64;
+	typedef unsigned __int32 uptr;
+#endif
+
 /********* General Defaults **********/
 #if (!defined(EXTERNAL_RELEASE))
 #define AppVer   "Project64 - Build 57"
