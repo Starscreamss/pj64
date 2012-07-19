@@ -558,7 +558,7 @@ void Load_FPR_ToTop (BLOCK_SECTION * Section, int Reg, int RegToLoad, int Format
 			if (FpuMappedTo((StackTopPos - 1) & 7) != (DWORD)RegToLoad) {
 				UnMap_FPR(Section,FpuMappedTo((StackTopPos - 1) & 7),TRUE);
 				CPU_Message("    regcache: allocate ST(0) to %s", FPR_Name[Reg]);
-				fpuLoadReg(&StackTopPos,StackPosition(Section,RegToLoad));		
+				fpuLoadReg((int*)&StackTopPos,StackPosition(Section,RegToLoad));		
 				FpuRoundingModel(StackTopPos) = RoundDefault;
 				FpuMappedTo(StackTopPos)      = Reg;
 				FpuState(StackTopPos)         = Format;
@@ -610,22 +610,22 @@ void Load_FPR_ToTop (BLOCK_SECTION * Section, int Reg, int RegToLoad, int Format
 		case FPU_Dword:
 			sprintf(Name,"FPRFloatLocation[%d]",RegToLoad);
 			MoveVariableToX86reg(&FPRFloatLocation[RegToLoad],Name,TempReg);
-			fpuLoadIntegerDwordFromX86Reg(&StackTopPos,TempReg);
+			fpuLoadIntegerDwordFromX86Reg((int*)&StackTopPos,TempReg);
 			break;
 		case FPU_Qword:
 			sprintf(Name,"FPRDoubleLocation[%d]",RegToLoad);
 			MoveVariableToX86reg(&FPRDoubleLocation[RegToLoad],Name,TempReg);
-			fpuLoadIntegerQwordFromX86Reg(&StackTopPos,TempReg);
+			fpuLoadIntegerQwordFromX86Reg((int*)&StackTopPos,TempReg);
 			break;
 		case FPU_Float:
 			sprintf(Name,"FPRFloatLocation[%d]",RegToLoad);
 			MoveVariableToX86reg(&FPRFloatLocation[RegToLoad],Name,TempReg);
-			fpuLoadDwordFromX86Reg(&StackTopPos,TempReg);
+			fpuLoadDwordFromX86Reg((int*)&StackTopPos,TempReg);
 			break;
 		case FPU_Double:
 			sprintf(Name,"FPRDoubleLocation[%d]",RegToLoad);
 			MoveVariableToX86reg(&FPRDoubleLocation[RegToLoad],Name,TempReg);
-			fpuLoadQwordFromX86Reg(&StackTopPos,TempReg);
+			fpuLoadQwordFromX86Reg((int*)&StackTopPos,TempReg);
 			break;
 #ifndef EXTERNAL_RELEASE
 		default:
@@ -1066,7 +1066,7 @@ void UnMap_AllFPRs ( BLOCK_SECTION * Section ) {
 		//see if any more registers mapped
 		StartPos = StackTopPos;
 		for (i = 0; i < 8; i++) {
-			if (FpuMappedTo((StartPos + i) & 7) != -1 ) { fpuIncStack(&StackTopPos); }
+			if (FpuMappedTo((StartPos + i) & 7) != -1 ) { fpuIncStack((int*)&StackTopPos); }
 		}
 		if (StackPos != StackTopPos) { continue; }
 		return;
@@ -1134,22 +1134,22 @@ void UnMap_FPR (BLOCK_SECTION * Section, int Reg, int WriteBackValue ) {
 			case FPU_Dword: 
 				sprintf(Name,"FPRFloatLocation[%d]",FpuMappedTo(StackTopPos));
 				MoveVariableToX86reg(&FPRFloatLocation[FpuMappedTo(StackTopPos)],Name,TempReg);
-				fpuStoreIntegerDwordFromX86Reg(&StackTopPos,TempReg, TRUE); 
+				fpuStoreIntegerDwordFromX86Reg((int*)&StackTopPos,TempReg, TRUE); 
 				break;
 			case FPU_Qword: 
 				sprintf(Name,"FPRDoubleLocation[%d]",FpuMappedTo(StackTopPos));
 				MoveVariableToX86reg(&FPRDoubleLocation[FpuMappedTo(StackTopPos)],Name,TempReg);
-				fpuStoreIntegerQwordFromX86Reg(&StackTopPos,TempReg, TRUE); 
+				fpuStoreIntegerQwordFromX86Reg((int*)&StackTopPos,TempReg, TRUE); 
 				break;
 			case FPU_Float: 
 				sprintf(Name,"FPRFloatLocation[%d]",FpuMappedTo(StackTopPos));
 				MoveVariableToX86reg(&FPRFloatLocation[FpuMappedTo(StackTopPos)],Name,TempReg);
-				fpuStoreDwordFromX86Reg(&StackTopPos,TempReg, TRUE); 
+				fpuStoreDwordFromX86Reg((int*)&StackTopPos,TempReg, TRUE); 
 				break;
 			case FPU_Double: 
 				sprintf(Name,"FPRDoubleLocation[%d]",FpuMappedTo(StackTopPos));
 				MoveVariableToX86reg(&FPRDoubleLocation[FpuMappedTo(StackTopPos)],Name,TempReg);
-				fpuStoreQwordFromX86Reg(&StackTopPos,TempReg, TRUE); 
+				fpuStoreQwordFromX86Reg((int*)&StackTopPos,TempReg, TRUE); 
 				break;
 #ifndef EXTERNAL_RELEASE
 			default:
