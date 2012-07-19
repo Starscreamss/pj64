@@ -31,7 +31,7 @@
 
 int DMAUsed;
 
-void FirstDMA (void) {
+void FirstDMA () {
 	switch (GetCicChipID(ROM)) {
 	case 1: *(DWORD *)&N64MEM[0x318] = RdramSize; break;
 	case 2: *(DWORD *)&N64MEM[0x318] = RdramSize; break;

@@ -25,7 +25,7 @@
  */
 extern BYTE PifRom[0x7C0], *PIF_Ram;
 
-int  GetCicChipID ( char * RomData );
+int  GetCicChipID ( BYTE * RomData );
 int  LoadPifRom   ( int country );
 void PifRamWrite  ( void );
 void PifRamRead   ( void );
