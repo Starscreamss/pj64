@@ -32,6 +32,8 @@
 #include "debugger.h"
 #include "plugin.h"
 
+T_N64_Blocks N64_Blocks;
+
 void _fastcall CreateSectionLinkage (BLOCK_SECTION * Section);
 void _fastcall DetermineLoop(BLOCK_SECTION * Section, DWORD Test, DWORD Test2, DWORD TestID);
 BOOL DisplaySectionInformation (BLOCK_SECTION * Section, DWORD ID, DWORD Test);

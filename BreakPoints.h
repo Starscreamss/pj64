@@ -43,7 +43,7 @@ typedef struct {
    unsigned int Location;
 } BPOINT;
 
-BPOINT BPoint[MaxBPoints];
-int	NoOfBpoints;
+extern BPOINT BPoint[MaxBPoints];
+extern int	NoOfBpoints;
 
 #endif

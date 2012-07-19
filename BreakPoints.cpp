@@ -34,6 +34,7 @@
 #include "debugger.h"
 #include "plugin.h"
 
+
 #define IDC_LIST				100
 #define IDC_TAB_CONTROL			101
 #define IDC_REMOVE_BUTTON		103
@@ -57,6 +58,8 @@ static HWND BPoint_Win_hDlg, hTab, hList, hStatic, hR4300iLocation, hFunctionlis
 static BOOL InBPWindow = FALSE;
 static WNDPROC RefProc;
 int RSPBP_count;
+BPOINT BPoint[MaxBPoints];
+int	NoOfBpoints;
 
 int Add_R4300iBPoint( DWORD Location, int Confirm ) {
 	int count;

@@ -1,6 +1,7 @@
-#ifndef EXTERNAL_RELEASE
-#define MEM_LEAK_TEST
-#endif
+//zero 19-jul-2012 - removing the mem test system
+//#ifndef EXTERNAL_RELEASE
+//#define MEM_LEAK_TEST
+//#endif
 
 #ifdef MEM_LEAK_TEST
 

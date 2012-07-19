@@ -50,11 +50,11 @@
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Sram.cpp" />
     <ClCompile Include="TLB.cpp" />
-    <ClCompile Include="Win32Timer.cpp" />
     <ClCompile Include="X86.cpp" />
     <ClCompile Include="SyncCPU.cpp" />
     <ClCompile Include="TLBDisplay.cpp" />
     <ClCompile Include="SettingsApi.cpp" />
+    <ClCompile Include="Win32Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unzip.h">

@@ -108,7 +108,7 @@
 #define FpuBeenUsed				Section->RegWorking.Fpu_Used
 #define CurrentRoundingModel	Section->RegWorking.RoundingModel
 
-typedef struct {
+struct REG_INFO {
 	//r4k
 	int		    MIPS_RegState[32];
 	MIPS_DWORD	MIPS_RegVal[32];
@@ -128,9 +128,10 @@ typedef struct {
 	
 	BOOL        Fpu_Used;
 	DWORD       RoundingModel;
-} REG_INFO;
+};
 
-typedef struct {
+struct JUMP_INFO
+{
 	DWORD		TargetPC;
 	char *		BranchLabel;
 	BYTE *		LinkLocation;
@@ -139,9 +140,9 @@ typedef struct {
 	BOOL		PermLoop;
 	BOOL		DoneDelaySlot;
 	REG_INFO	RegSet;
-} JUMP_INFO;
+};
 
-typedef struct {
+struct BLOCK_SECTION {
 	/* Block Connection info */
 	void **		ParentSection;
 	void *		ContinueSection;
@@ -164,48 +165,50 @@ typedef struct {
 	/* Jump Info */
 	JUMP_INFO   Jump;
 	JUMP_INFO   Cont;
-} BLOCK_SECTION;
+};
 
-typedef struct {
+struct BLOCK_PARENT{
 	BLOCK_SECTION * Parent;
 	JUMP_INFO     * JumpInfo;
-} BLOCK_PARENT;
+};
 
-typedef struct {
+struct EXIT_INFO{
 	DWORD    TargetPC;
 	REG_INFO ExitRegSet;
 	int      reason;
 	int      NextInstruction;
 	BYTE *   JumpLoc; //32bit jump
-} EXIT_INFO;
+};
 
-typedef struct {
+struct BLOCK_INFO{
 	DWORD	 	  StartVAddr;
 	BYTE *		  CompiledLocation;
 	int           NoOfSections;
 	BLOCK_SECTION BlockInfo;
 	EXIT_INFO  ** ExitInfo;
 	int           ExitCount;
-} BLOCK_INFO;
+} ;
 
-typedef struct {
+struct TARGET_INFO{
 	void * CodeBlock;
 	QWORD  OriginalMemory;
-} TARGET_INFO;
+};
 
-typedef struct {
+struct ORIGINAL_MEMMARKER {
 	DWORD PAddr; 
 	DWORD VAddr; 
 	DWORD OriginalValue; 
 	void * CompiledLocation;
-} ORIGINAL_MEMMARKER;
+} ;
 
-struct {
+struct T_N64_Blocks {
 	DWORD NoOfRDRamBlocks[2048]; 
 	DWORD NoOfDMEMBlocks; 
 	DWORD NoOfIMEMBlocks; 
 	DWORD NoOfPifRomBlocks; 
-} N64_Blocks;
+};
+
+extern T_N64_Blocks N64_Blocks;
 
 BYTE *Compiler4300iBlock    ( void );
 BYTE *CompileDelaySlot      ( void );
