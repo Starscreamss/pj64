@@ -555,7 +555,7 @@ BOOL PluginsChanged ( HWND hDlg ) {
 
 BOOL CALLBACK PluginSelectProc (HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	char Plugin[300];
-	HANDLE hLib;
+	HMODULE hLib;
 	DWORD count, index;
 
 	switch (uMsg) {

@@ -769,7 +769,7 @@ void LeaRegReg(int x86RegDest, int x86RegSrc, int multiplier) {
 	PUTDST32(RecompPos,0x00000000);
 }
 
-void LeaSourceAndOffset(x86DestReg, x86SourceReg, offset) {
+void LeaSourceAndOffset(int x86DestReg, int x86SourceReg, int offset) {
 	WORD x86Command;
 
 	CPU_Message("      lea %s, [%s + %0Xh]",x86_Name(x86DestReg),x86_Name(x86SourceReg),offset);
