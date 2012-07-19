@@ -137,7 +137,7 @@ void fInsertSpaces(FILE * File,int Pos, int NoOfSpaces) {
 				fseek(File,WritePos,SEEK_SET);
 				end = WritePos;
 				fprintf(File,"%*c",NoOfSpaces,' ');
-				result = strlen(Data);
+				result = strlen((char*)Data);
 				fwrite(Data,result,1,File);
 				fseek(File,WritePos,SEEK_SET);						
 			}
@@ -178,7 +178,7 @@ unsigned int _GetPrivateProfileInt(
 	
 	//test to see if Fpos is same as current section;
 	fseek(fInput,Fpos,SEEK_SET);
-	result = fGetString2(fInput,&Input,&Data,&DataLen,&DataLeft);
+	result = fGetString2(fInput,&Input,(BYTE**)&Data,&DataLen,&DataLeft);
 	if (result > 1) {
 		Pos = Input;
 		while (Pos != NULL) {
@@ -212,7 +212,7 @@ unsigned int _GetPrivateProfileInt(
 		if (strcmp(lpAppName,CurrentSection) != 0) { 
 			Fpos = ftell(fInput) - DataLeft;
 		}
-		result = fGetString2(fInput,&Input,&Data,&DataLen,&DataLeft);
+		result = fGetString2(fInput,&Input,(BYTE**)&Data,&DataLen,&DataLeft);
 		if (result <= 1) { continue; }
 		
 		Pos = Input;
@@ -278,7 +278,7 @@ unsigned int _GetPrivateProfileString(
 	
 	//test to see if Fpos is same as current section;
 	fseek(fInput,Fpos,SEEK_SET);
-	result = fGetString2(fInput,&Input,&Data,&DataLen,&DataLeft);
+	result = fGetString2(fInput,&Input,(BYTE**)&Data,&DataLen,&DataLeft);
 	if (result > 1) {
 		Pos = Input;
 		while (Pos != NULL) {
@@ -312,7 +312,7 @@ unsigned int _GetPrivateProfileString(
 		if (strcmp(lpAppName,CurrentSection) != 0) { 
 			Fpos = ftell(fInput) - DataLeft;
 		}
-		result = fGetString2(fInput,&Input,&Data,&DataLen,&DataLeft);
+		result = fGetString2(fInput,&Input,(BYTE**)&Data,&DataLen,&DataLeft);
 		if (result <= 1) { continue; }
 		
 		Pos = Input;
@@ -379,7 +379,7 @@ unsigned int _GetPrivateProfileString2(
 	
 	//test to see if Fpos is same as current section;
 	fseek(fInput,Fpos,SEEK_SET);
-	result = fGetString2(fInput,&Input,&Data,&DataLen,&DataLeft);
+	result = fGetString2(fInput,&Input,(BYTE**)&Data,&DataLen,&DataLeft);
 	if (result > 1) {
 		Pos = Input;
 		while (Pos != NULL) {
@@ -413,7 +413,7 @@ unsigned int _GetPrivateProfileString2(
 		if (strcmp(lpAppName,CurrentSection) != 0) { 
 			Fpos = ftell(fInput) - DataLeft;
 		}
-		result = fGetString2(fInput,&Input,&Data,&DataLen,&DataLeft);
+		result = fGetString2(fInput,&Input,(BYTE**)&Data,&DataLen,&DataLeft);
 		if (result <= 1) { continue; }
 		
 		Pos = Input;
@@ -579,7 +579,7 @@ int _DeletePrivateProfileString(
 		if (strcmp(lpAppName,CurrentSection) != 0) { 
 			Fpos = ftell(fInput) - DataLeft;
 		}
-		result = fGetString2(fInput,&Input,&Data,&DataLen,&DataLeft);
+		result = fGetString2(fInput,&Input,(BYTE**)&Data,&DataLen,&DataLeft);
 		if (result <= 1) { continue; }
 		
 		Pos = Input;
@@ -692,7 +692,7 @@ int _WritePrivateProfileString(
 		if (strcmp(lpAppName,CurrentSection) != 0) { 
 			Fpos = ftell(fInput) - DataLeft;
 		}
-		result = fGetString2(fInput,&Input,&Data,&DataLen,&DataLeft);
+		result = fGetString2(fInput,&Input,(BYTE**)&Data,&DataLen,&DataLeft);
 		if (result <= 1) { continue; }
 		
 		Pos = Input;
