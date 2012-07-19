@@ -1451,25 +1451,25 @@ void _fastcall r4300i_COP1_D_FLOOR_L (void) {	//added by Witten
 void _fastcall r4300i_COP1_D_ROUND_W (void) {
 	TEST_COP1_USABLE_EXCEPTION
 	_controlfp(_RC_NEAR,_MCW_RC);
-	Double_RoundToInteger32(&*(DWORD *)FPRFloatLocation[Opcode.fd],&*(double *)FPRDoubleLocation[Opcode.fs] );
+	Double_RoundToInteger32((__int32*)&*(DWORD *)FPRFloatLocation[Opcode.fd],&*(double *)FPRDoubleLocation[Opcode.fs] );
 }
 
 void _fastcall r4300i_COP1_D_TRUNC_W (void) {
 	TEST_COP1_USABLE_EXCEPTION
 	_controlfp(RC_CHOP,_MCW_RC);
-	Double_RoundToInteger32(&*(DWORD *)FPRFloatLocation[Opcode.fd],&*(double *)FPRDoubleLocation[Opcode.fs] );
+	Double_RoundToInteger32((__int32*)&*(DWORD *)FPRFloatLocation[Opcode.fd],&*(double *)FPRDoubleLocation[Opcode.fs] );
 }
 
 void _fastcall r4300i_COP1_D_CEIL_W (void) {	//added by Witten
 	TEST_COP1_USABLE_EXCEPTION
 	_controlfp(RC_UP,_MCW_RC);
-	Double_RoundToInteger32(&*(DWORD *)FPRFloatLocation[Opcode.fd],&*(double *)FPRDoubleLocation[Opcode.fs] );
+	Double_RoundToInteger32((__int32*)&*(DWORD *)FPRFloatLocation[Opcode.fd],&*(double *)FPRDoubleLocation[Opcode.fs] );
 }
 
 void _fastcall r4300i_COP1_D_FLOOR_W (void) {	//added by Witten
 	TEST_COP1_USABLE_EXCEPTION
 	_controlfp(_RC_DOWN,_MCW_RC);
-	Double_RoundToInteger32(&*(DWORD *)FPRDoubleLocation[Opcode.fd],&*(double *)FPRFloatLocation[Opcode.fs]);
+	Double_RoundToInteger32((__int32*)&*(DWORD *)FPRDoubleLocation[Opcode.fd],&*(double *)FPRFloatLocation[Opcode.fs]);
 }
 
 void _fastcall r4300i_COP1_D_CVT_S (void) {
@@ -1481,13 +1481,13 @@ void _fastcall r4300i_COP1_D_CVT_S (void) {
 void _fastcall r4300i_COP1_D_CVT_W (void) {
 	TEST_COP1_USABLE_EXCEPTION
 	_controlfp(RoundingModel,_MCW_RC);
-	Double_RoundToInteger32(&*(DWORD *)FPRFloatLocation[Opcode.fd],&*(double *)FPRDoubleLocation[Opcode.fs] );
+	Double_RoundToInteger32((__int32*)&*(DWORD *)FPRFloatLocation[Opcode.fd],&*(double *)FPRDoubleLocation[Opcode.fs] );
 }
 
 void _fastcall r4300i_COP1_D_CVT_L (void) {
 	TEST_COP1_USABLE_EXCEPTION
 	_controlfp(RoundingModel,_MCW_RC);
-	Double_RoundToInteger64(&*(unsigned __int64 *)FPRDoubleLocation[Opcode.fd],&*(double *)FPRDoubleLocation[Opcode.fs]);
+	Double_RoundToInteger64((__int64*)&*(unsigned __int64 *)FPRDoubleLocation[Opcode.fd],&*(double *)FPRDoubleLocation[Opcode.fs]);
 }
 
 void _fastcall r4300i_COP1_D_CMP (void) {
