@@ -55,7 +55,7 @@ LRESULT CALLBACK RefreshBPProc ( HWND, UINT, WPARAM, LPARAM );
 static HWND BPoint_Win_hDlg, hTab, hList, hStatic, hR4300iLocation, hFunctionlist,
     hAddButton, hRemoveButton, hRemoveAllButton;
 static BOOL InBPWindow = FALSE;
-static FARPROC RefProc;
+static WNDPROC RefProc;
 int RSPBP_count;
 
 int Add_R4300iBPoint( DWORD Location, int Confirm ) {
@@ -262,7 +262,7 @@ void Paint_BPoint_Win (HWND hDlg) {
 	rcBox.bottom = 287;
 	DrawEdge( ps.hdc, &rcBox, EDGE_ETCHED, BF_RECT );
 	
-	hOldFont = SelectObject(ps.hdc,GetStockObject(DEFAULT_GUI_FONT));
+	hOldFont = (HFONT)SelectObject(ps.hdc,GetStockObject(DEFAULT_GUI_FONT));
 	OldBkMode = SetBkMode( ps.hdc, TRANSPARENT );
 		
 	TextOut( ps.hdc, 9,159,"Breakpoints: ",13);
@@ -311,7 +311,7 @@ LRESULT CALLBACK RefreshBPProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		rcBox.bottom = 125;
 		DrawEdge( ps.hdc, &rcBox, EDGE_ETCHED, BF_RECT );
 
-		hOldFont = SelectObject( ps.hdc,
+		hOldFont = (HFONT)SelectObject( ps.hdc,
 			GetStockObject(DEFAULT_GUI_FONT) );
 		OldBkMode = SetBkMode( ps.hdc, TRANSPARENT );
 
@@ -454,7 +454,7 @@ void Setup_BPoint_Win (HWND hDlg) {
 	}
 
 	hStatic = CreateWindowEx(0,"STATIC","", WS_CHILD | WS_VISIBLE, 5,6,250,150,hDlg,0,hInst,NULL );
-	RefProc = (FARPROC)SetWindowLong( hStatic,GWL_WNDPROC,(long)RefreshBPProc);
+	RefProc = (WNDPROC)SetWindowLong( hStatic,GWL_WNDPROC,(long)RefreshBPProc);
 	
 	SetWindowText(hDlg," Breakpoints");
 
