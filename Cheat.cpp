@@ -1515,7 +1515,7 @@ char * LineFeed = "\n";
 	fInput = fopen(IniFileName,"r+b");
 	if (fInput == NULL) { 
 		fInput = fopen(IniFileName,"w+b");
-		if (IniFileName == NULL) { return; }
+		if (fInput == NULL) { return; }
 	}
 	CurrentSection[0] = 0;
 
