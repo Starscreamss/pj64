@@ -98,7 +98,7 @@ void Insert_MemoryLineDump (unsigned int location, int InsertPos) {
 	sprintf(Hex,"\0"); sprintf(Ascii,"\0"); 
 	
 	__try {
-		if ( SendMessage(hVAddr,BM_GETSTATE,0,0) & BST_CHECKED != 0 ) {
+		if ( (SendMessage(hVAddr,BM_GETSTATE,0,0) & BST_CHECKED) != 0 ) {
 			for (count = 0; count < 4; count ++) {
 				if (r4300i_LW_VAddr(location, &word.UW)) {
 					sprintf(HexAddOn,"%02X %02X %02X %02X",word.UB[3],
