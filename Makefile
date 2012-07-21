@@ -12,8 +12,8 @@ else
 	COMPILER = g++
 endif
 
-# Compiler and flags
-COMPILER += g++ -O2
+# Compiler flags
+COMPILER += -O2
 
 # Dynamic libraries
 DEPENDENCIES = -lSDL # Just filler until we see the deps...
