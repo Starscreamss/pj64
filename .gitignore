@@ -8,6 +8,7 @@
 *.suo
 /Release
 /output
+/glide64/boost_1_34_1
 /glide64/ipch
 /glide64/Glide64/MSVS/Debug
 /glide64/Glide64/MSVS/Release
