@@ -2873,7 +2873,7 @@ void StartRecompilerCPU (void ) {
 	Start_x86_Log();
 #endif
 
-	if (ModCode_CheckMemoryCache || ModCode_CheckMemory2) {// *** Add in Build 53
+	if (SelfModCheck == ModCode_CheckMemoryCache || SelfModCheck == ModCode_CheckMemory2) {// *** Add in Build 53
 		if (TargetInfo == NULL) {
 			TargetInfo = (TARGET_INFO*)VirtualAlloc(NULL,MaxCodeBlocks * sizeof(TARGET_INFO),MEM_COMMIT|MEM_RESERVE,PAGE_READWRITE);
 			if (TargetInfo == NULL) {
