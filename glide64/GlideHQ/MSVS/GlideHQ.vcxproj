@@ -70,7 +70,7 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>kernel32.lib;user32.lib;LIBCMTD.LIB;LIBCPMTD.LIB;libboost_filesystem-vc80-mt-sgd.lib;dxtnd.lib;libpngd.lib;zlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>D:\Games\N64\plugin\GlideHQ.dll </OutputFile>
+      <OutputFile>$(OutDir)GlideHQ.dll </OutputFile>
       <AdditionalLibraryDirectories>../lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -96,7 +96,7 @@
     </ProjectReference>
     <Link>
       <AdditionalDependencies>kernel32.lib;user32.lib;LIBCMT.LIB;LIBCPMT.LIB;libboost_filesystem-vc80-mt-s.lib;dxtn.lib;libpng.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>D:\Games\N64\plugin\GlideHQ.dll</OutputFile>
+      <OutputFile>$(OutDir)GlideHQ.dll</OutputFile>
       <AdditionalLibraryDirectories>../lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
