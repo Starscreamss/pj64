@@ -1,20 +1,31 @@
 # Makefile for Project64
 # Written by Ethan "flibitijibibo" Lee
 
+# System information
+UNAME = $(shell uname)
+ARCH = $(shell uname -m)
+
+# Compiler
+ifeq ($(UNAME), Darwin)
+	COMPILER = clang++
+else
+	COMPILER = g++
+endif
+
 # Compiler and flags
-# TODO: Try to get rid of these flags...
-# TODO: Clang!
-COMPILER = g++ -O2 -Wno-deprecated -fpermissive -w
+COMPILER += g++ -O2
+
 # Dynamic libraries
 DEPENDENCIES = -lSDL # Just filler until we see the deps...
+
 # Source directories
 PJ64SRCDIR = .
+
 # Parameters
 INCLUDES = -I. # Just filler until we see the deps...
 DEFINES = -DFLIBIT_RULES # Just filler until we see some ifdefs...
+
 # Executable name
-UNAME = $(shell uname)
-ARCH = $(shell uname -m)
 ifeq ($(UNAME), Darwin)
 	EXECUTABLE = osx/project64.osx
 endif
@@ -27,7 +38,6 @@ ifeq ($(UNAME), Linux)
 endif
 
 # Source lists
-
 PJ64SRC = \
 	$(PJ64SRCDIR)/BreakPoints.cpp \
 	$(PJ64SRCDIR)/BreakPoints.cpp \
@@ -72,7 +82,7 @@ PJ64SRC = \
 	$(PJ64SRCDIR)/x86fpu.cpp \
 	$(PJ64SRCDIR)/X86rsp.cpp
 
-# Object code list
+# Object code lists
 PJ64OBJ = $(PJ64SRC:%.cpp=%.o)
 
 # Targets
