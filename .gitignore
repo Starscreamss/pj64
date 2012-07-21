@@ -8,8 +8,6 @@
 *.suo
 /Release
 /output
-/glide64/Debug
-/glide64/Release
 /glide64/Glide64/MSVS/Debug
 /glide64/Glide64/MSVS/Release
 /glide64/GlideHQ/MSVS/Debug
