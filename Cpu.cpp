@@ -1173,13 +1173,13 @@ void RunRsp (void) {
 			}
 
 			//TODO - this was an error in the original code (the DisplayCPUPer not being a function call), so we need to debug it and see if it is supposed to be happening
-			if (Profiling || DisplayCPUPer) {
+			if (Profiling || ShowCPUPer) {
 				char Label[100];
 
 				strncpy(Label,ProfilingLabel,sizeof(Label));
 
 				//TODO - this was an error in the original code (the DisplayCPUPer not being a function call), so we need to debug it and see if it is supposed to be happening
-				if (IndvidualBlock && !DisplayCPUPer) {
+				if (IndvidualBlock && !ShowCPUPer) {
 					StartTimer("RSP");
 				} else {
 					switch (*( DWORD *)(DMEM + 0xFC0)) {

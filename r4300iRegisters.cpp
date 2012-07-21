@@ -167,7 +167,7 @@ void HideR4300iRegisterPanel ( int Panel) {
 		for (count = 0; count < 13;count ++) { ShowWindow(hPI[count],FALSE); }
 		break;
 	case RDRAMInterface:
-		for (count = 0; count < 13;count ++) { ShowWindow(hRI[count],FALSE); }
+		for (count = 0; count < 8;count ++) { ShowWindow(hRI[count],FALSE); }
 		break;
 	case SerialInterface:
 		for (count = 0; count < 4;count ++) { ShowWindow(hSI[count],FALSE); }
