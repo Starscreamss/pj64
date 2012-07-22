@@ -63,7 +63,7 @@ int InRSPRegisterWindow = FALSE;
 FARPROC RefreshProc;
 
 /*** RSP Registers ***/
-UWORD   RSP_GPR[32], RSP_Flags[4];
+UWORD_   RSP_GPR[32], RSP_Flags[4];
 UDWORD  RSP_ACCUM[8];
 VECTOR  RSP_Vect[32];
 

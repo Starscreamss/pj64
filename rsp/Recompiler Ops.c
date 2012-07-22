@@ -37,7 +37,7 @@
 #include "log.h"
 #include "x86.h"
 
-UWORD Recp, RecpResult, SQroot, SQrootResult;
+UWORD_ Recp, RecpResult, SQroot, SQrootResult;
 DWORD ESP_RegSave = 0, EBP_RegSave = 0;
 DWORD BranchCompare = 0;
 
