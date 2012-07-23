@@ -17,28 +17,24 @@ endif
 # Compiler flags
 CFLAGS = -O2
 
-# Dynamic libraries
-DEPENDENCIES = -lSDL # Just filler until we see the deps...
-
-# Source directories
-PJ64SRCDIR = .
-RSPSRCDIR = ./rsp
-
-# Parameters
-INCLUDES = -I. # Just filler until we see the deps...
-DEFINES = -DFLIBIT_RULES # Just filler until we see some ifdefs...
-
-# Executable name
+# Executable/library names
 ifeq ($(UNAME), Darwin)
 	EXECUTABLE = osx/project64.osx
+	RSPLIB = osx/libRSP.dylib
 endif
 ifeq ($(UNAME), Linux)
 	ifeq ($(ARCH), x86_64)
 		EXECUTABLE = x86_64/project64.x86_64
+		RSPLIB = x86_64/libRSP.so
 	else
 		EXECUTABLE = x86/project64.x86
+		RSPLIB = x86/libRSP.so
 	endif
 endif
+
+# Source directories
+PJ64SRCDIR = .
+RSPSRCDIR = ./rsp
 
 # Source lists
 PJ64SRC = \
@@ -109,14 +105,19 @@ PJ64OBJ = $(PJ64SRC:%.cpp=%.o)
 RSPOBJ = $(RSPSRC:%.c=%.o)
 
 # Targets
-all: $(PJ64OBJ) $(RSPOBJ)
-	$(CXX) $(CFLAGS) $(PJ64OBJ) $(RSPOBJ) -o $(EXECUTABLE) $(DEPENDENCIES)
+all: pj64 rsp
+
+pj64: $(PJ64OBJ)
+	$(CXX) $(CFLAGS) $(PJ64OBJ) -o $(EXECUTABLE)
 
 $(PJ64SRCDIR)/%.o: $(PJ64SRCDIR)/%.cpp
-	$(CXX) $(CFLAGS) -c -o $@ $< $(INCLUDES) $(DEFINES)
+	$(CXX) $(CFLAGS) -c -o $@ $<
+
+rsp: $(RSPOBJ)
+	$(CC) $(CFLAGS) $(RSPOBJ) -o $(RSPLIB) -shared -fPIC
 
 $(RSPSRCDIR)/%.o: $(RSPSRCDIR)/%.c
-	$(CC) $(CFLAGS) -c -o $@ $< $(INCLUDES) $(DEFINES)
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	rm $(PJ64OBJ) $(RSPOBJ) $(EXECUTABLE)
+	rm $(PJ64OBJ) $(RSPOBJ) $(EXECUTABLE) $(RSPLIB)
