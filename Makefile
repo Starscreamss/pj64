@@ -114,7 +114,7 @@ $(PJ64SRCDIR)/%.o: $(PJ64SRCDIR)/%.cpp
 	$(CXX) $(CFLAGS) -c -o $@ $<
 
 rsp: $(RSPOBJ)
-	$(CC) $(CFLAGS) $(RSPOBJ) -o $(RSPLIB)
+	$(CC) $(CFLAGS) $(RSPOBJ) -o $(RSPLIB) -shared -fPIC
 
 $(RSPSRCDIR)/%.o: $(RSPSRCDIR)/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
