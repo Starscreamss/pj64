@@ -26,12 +26,18 @@
 
 #include <windows.h>
 #include <stdio.h>
+#include <time.h>
 #include "main.h"
 #include "CPU.h"
 
 static HANDLE hEepromFile = NULL;
 BYTE EEPROM[0x800];
-
+	
+unsigned char byte2bcd(int n)
+{
+	n %= 100;
+	return ((n / 10) << 4) | (n % 10);
+}
 void CloseEeprom (void) {
 	if (hEepromFile) {
 		CloseHandle(hEepromFile);
@@ -40,6 +46,8 @@ void CloseEeprom (void) {
 }
 
 void EepromCommand ( BYTE * Command) {
+	time_t curtime_time;
+	struct tm curtime;
 	if (SaveUsing == Auto) { SaveUsing = Eeprom_4K; }
 
 	switch (Command[2]) {
@@ -76,6 +84,41 @@ void EepromCommand ( BYTE * Command) {
 		if (Command[1] != 1) { DisplayError("What am I meant to do with this Eeprom Command"); }
 #endif
 		WriteToEeprom(&Command[4],Command[3]);
+		break;
+	case 6: //RTC Support, Credit Mupen64 Source
+		//RTC Status Query
+		Command[3]  = 0x00;
+		Command[4]  = 0x10;
+		Command[12] = 0x00;
+		break;
+	case 7:
+		//Read RTC Block
+		switch(Command[3]){ //Block number
+			case 0:
+				Command[4] = 0x00;
+				Command[5] = 0x02;
+				Command[12] = 0x00;
+				break;
+			case 1:
+				//Read block, Command[2]
+				break;
+			case 2:
+				time(&curtime_time);
+				memcpy(&curtime, localtime(&curtime_time), sizeof(curtime)); // fd's fix
+				Command[4] = byte2bcd(curtime.tm_sec);
+				Command[5] = byte2bcd(curtime.tm_min);
+				Command[6] = 0x80 + byte2bcd(curtime.tm_hour);
+				Command[7] = byte2bcd(curtime.tm_mday);
+				Command[8] = byte2bcd(curtime.tm_wday);
+				Command[9] = byte2bcd(curtime.tm_mon + 1);
+				Command[10] = byte2bcd(curtime.tm_year);
+				Command[11] = byte2bcd(curtime.tm_year / 100);
+				Command[12] = 0x00;	// status
+			    break;
+		}
+		break;
+	case 8:
+		//Write RTC Block
 		break;
 	default:
 		if (ShowPifRamErrors) { DisplayError("Unkown EepromCommand %d",Command[2]); }
