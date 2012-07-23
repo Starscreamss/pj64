@@ -7,19 +7,22 @@ ARCH = $(shell uname -m)
 
 # Compiler
 ifeq ($(UNAME), Darwin)
-	COMPILER = clang++
+	CC = clang
+	CXX = clang++
 else
-	COMPILER = g++
+	CC = gcc
+	CXX = g++
 endif
 
 # Compiler flags
-COMPILER += -O2
+CFLAGS = -O2
 
 # Dynamic libraries
 DEPENDENCIES = -lSDL # Just filler until we see the deps...
 
 # Source directories
 PJ64SRCDIR = .
+RSPSRCDIR = ./rsp
 
 # Parameters
 INCLUDES = -I. # Just filler until we see the deps...
@@ -81,16 +84,39 @@ PJ64SRC = \
 	$(PJ64SRCDIR)/X86.cpp \
 	$(PJ64SRCDIR)/x86fpu.cpp \
 	$(PJ64SRCDIR)/X86rsp.cpp
+RSPSRC = \
+	$(RSPSRCDIR)/breakpoint.c \
+	$(RSPSRCDIR)/Cpu.c \
+	$(RSPSRCDIR)/dma.c \
+	$(RSPSRCDIR)/Interpreter\ CPU.c \
+	$(RSPSRCDIR)/Interpreter\ Ops.c \
+	$(RSPSRCDIR)/log.c \
+	$(RSPSRCDIR)/Main.c \
+	$(RSPSRCDIR)/memory.c \
+	$(RSPSRCDIR)/Mmx.c \
+	$(RSPSRCDIR)/Profiling.c \
+	$(RSPSRCDIR)/Recompiler\ Analysis.c \
+	$(RSPSRCDIR)/Recompiler\ CPU.c \
+	$(RSPSRCDIR)/Recompiler\ Ops.c \
+	$(RSPSRCDIR)/Recompiler\ Sections.c \
+	$(RSPSRCDIR)/RSP\ Command.c \
+	$(RSPSRCDIR)/RSP\ Register.c \
+	$(RSPSRCDIR)/Sse.c \
+	$(RSPSRCDIR)/X86.c
 
 # Object code lists
 PJ64OBJ = $(PJ64SRC:%.cpp=%.o)
+RSPOBJ = $(RSPSRC:%.c=%.o)
 
 # Targets
-all: $(PJ64OBJ)
-	$(COMPILER) $(PJ64OBJ) -o $(EXECUTABLE) $(DEPENDENCIES)
+all: $(PJ64OBJ) $(RSPOBJ)
+	$(CXX) $(CFLAGS) $(PJ64OBJ) $(RSPOBJ) -o $(EXECUTABLE) $(DEPENDENCIES)
 
 $(PJ64SRCDIR)/%.o: $(PJ64SRCDIR)/%.cpp
-	$(COMPILER) -c -o $@ $< $(INCLUDES) $(DEFINES)
+	$(CXX) $(CFLAGS) -c -o $@ $< $(INCLUDES) $(DEFINES)
+
+$(RSPSRCDIR)/%.o: $(RSPSRCDIR)/%.c
+	$(CC) $(CFLAGS) -c -o $@ $< $(INCLUDES) $(DEFINES)
 
 clean:
-	rm $(PJ64OBJ) $(EXECUTABLE)
+	rm $(PJ64OBJ) $(RSPOBJ) $(EXECUTABLE)
