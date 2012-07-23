@@ -661,7 +661,7 @@ void SetupPluginScreen (HWND hDlg) {
 		strcat(Plugin,PluginNames[PluginCount]);
 		hLib = LoadLibrary(Plugin);		
 		if (hLib == NULL) { 
-			DisplayError("%s\n %s",GS(MSG_FAIL_LOAD_PLUGIN),Plugin); 
+			DisplayError("%s\n %s (%d)",GS(MSG_FAIL_LOAD_PLUGIN),Plugin, GetLastError()); 
 			if (FindNextFile(hFind,&FindData) == 0) { return; }
 			continue;
 		}
