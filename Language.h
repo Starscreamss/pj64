@@ -1,15 +1,7 @@
-#if defined(__cplusplus)
-extern "C" {
-#endif
-
 void LoadLanguage       ( char * RegLocation );
 void CreateLangList     ( HMENU hMenu, int uPosition, int MenuID );
 void SelectLangMenuItem ( HMENU hMenu, int LangMenuID );
 char * GS               ( int StringID );
-
-#if defined(__cplusplus)
-}
-#endif
 
 /*********************************************************************************
 * Meta Information                                                               *
