@@ -17,10 +17,6 @@ endif
 # Compiler flags
 CFLAGS = -O2
 
-# Source directories
-PJ64SRCDIR = .
-RSPSRCDIR = ./rsp
-
 # Executable/library names
 ifeq ($(UNAME), Darwin)
 	EXECUTABLE = osx/project64.osx
@@ -35,6 +31,10 @@ ifeq ($(UNAME), Linux)
 		RSPLIB = x86/libRSP.so
 	endif
 endif
+
+# Source directories
+PJ64SRCDIR = .
+RSPSRCDIR = ./rsp
 
 # Source lists
 PJ64SRC = \
