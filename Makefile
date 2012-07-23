@@ -24,15 +24,15 @@ RSPSRCDIR = ./rsp
 # Executable/library names
 ifeq ($(UNAME), Darwin)
 	EXECUTABLE = osx/project64.osx
-	RSPLIB = osx/librsp.dylib
+	RSPLIB = osx/libRSP.dylib
 endif
 ifeq ($(UNAME), Linux)
 	ifeq ($(ARCH), x86_64)
 		EXECUTABLE = x86_64/project64.x86_64
-		RSPLIB = x86_64/librsp.so
+		RSPLIB = x86_64/libRSP.so
 	else
 		EXECUTABLE = x86/project64.x86
-		RSPLIB = x86/librsp.so
+		RSPLIB = x86/libRSP.so
 	endif
 endif
 
