@@ -28,9 +28,6 @@
 
 #include "MemTest.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 #include <stdio.h>
 #include <objbase.h>
 #include "Types.h"
@@ -180,7 +177,5 @@ BOOL  TestExtensionRegistered ( char * Extension );
 
 void AboutBox (void);
 
-#ifdef __cplusplus
-}
-#endif
+
 #endif

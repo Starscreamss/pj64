@@ -144,7 +144,7 @@ void InitilizeRSPRegisters (void);
 void UpdateRSPRegistersScreen ( void );
 
 /*** RSP Registers ***/
-extern UWORD   RSP_GPR[32], RSP_Flags[4];
+extern UWORD_   RSP_GPR[32], RSP_Flags[4];
 extern UDWORD  RSP_ACCUM[8];
 extern VECTOR  RSP_Vect[32];
 

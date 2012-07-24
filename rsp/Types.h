@@ -35,7 +35,7 @@ typedef union tagUWORD {
 	unsigned short		UHW[2];
 	char				B[4];
 	unsigned char		UB[4];
-} UWORD;
+} UWORD_;
 
 typedef union tagUDWORD {
 	double				D;

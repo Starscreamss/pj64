@@ -37,7 +37,7 @@
 #include "log.h"
 #include "x86.h"
 
-UWORD Recp, RecpResult, SQroot, SQrootResult;
+UWORD_ Recp, RecpResult, SQroot, SQrootResult;
 DWORD ESP_RegSave = 0, EBP_RegSave = 0;
 DWORD BranchCompare = 0;
 
@@ -3483,7 +3483,7 @@ void Compile_Vector_VAND ( void ) {
 		MoveX86regHalfToVariable(x86_EAX, &RSP_Vect[RSPOpC.sa].HW[el], Reg);
 
 		if (bWriteToAccum != FALSE) {
-			sprintf(Reg, "RSP_ACCUM[el].HW[1]", el);
+			sprintf(Reg, "RSP_ACCUM[%i].HW[1]", el);
 			MoveX86regHalfToVariable(x86_EAX, &RSP_ACCUM[el].HW[1], Reg);
 		}
 	}
@@ -3573,7 +3573,7 @@ void Compile_Vector_VOR ( void ) {
 		}
 
 		if (bWriteToAccum == TRUE) {
-			sprintf(Reg, "RSP_ACCUM[el].HW[1]", el);
+			sprintf(Reg, "RSP_ACCUM[%i].HW[1]", el);
 			MoveX86regHalfToVariable(x86_EAX, &RSP_ACCUM[el].HW[1], Reg);
 		}
 		sprintf(Reg, "RSP_Vect[%i].HW[%i]", RSPOpC.sa, el);

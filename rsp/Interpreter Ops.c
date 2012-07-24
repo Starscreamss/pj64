@@ -37,7 +37,7 @@
 #include "log.h"
 #include "x86.h"
 
-extern UWORD Recp, RecpResult, SQroot, SQrootResult;
+extern UWORD_ Recp, RecpResult, SQroot, SQrootResult;
 
 /************************* OpCode functions *************************/
 void RSP_Opcode_SPECIAL ( void ) {
@@ -495,7 +495,7 @@ void RSP_COP2_VECTOR (void) {
 /************************** Vect functions **************************/
 void RSP_Vector_VMULF (void) {
 	int count, el, del;
-	UWORD temp;
+	UWORD_ temp;
 
 	for (count = 0; count < 8; count ++ ) {
 		el = Indx[RSPOpC.rs].B[count];
@@ -542,7 +542,7 @@ void RSP_Vector_VMULU (void) {
 
 void RSP_Vector_VMUDL (void) {
 	int count, el, del;
-	UWORD temp;
+	UWORD_ temp;
 
 	for (count = 0; count < 8; count ++ ) {
 		el = Indx[RSPOpC.rs].B[count];
@@ -558,7 +558,7 @@ void RSP_Vector_VMUDL (void) {
 
 void RSP_Vector_VMUDM (void) {
 	int count, el, del;
-	UWORD temp;
+	UWORD_ temp;
 
 	for (count = 0; count < 8; count ++ ) {
 		el = Indx[RSPOpC.rs].B[count];
@@ -578,7 +578,7 @@ void RSP_Vector_VMUDM (void) {
 
 void RSP_Vector_VMUDN (void) {
 	int count, el, del;
-	UWORD temp;
+	UWORD_ temp;
 
 	for (count = 0; count < 8; count ++ ) {
 		el = Indx[RSPOpC.rs].B[count];
@@ -631,8 +631,8 @@ void RSP_Vector_VMUDH (void) {
 
 void RSP_Vector_VMACF (void) {
 	int count, el, del;
-	//UWORD temp, temp2;
-	UWORD temp;
+	//UWORD_ temp, temp2;
+	UWORD_ temp;
 
 	for (count = 0; count < 8; count ++ ) {
 		el = Indx[RSPOpC.rs].B[count];
@@ -674,7 +674,7 @@ void RSP_Vector_VMACF (void) {
 
 void RSP_Vector_VMACU (void) {
 	int count, el, del;
-	UWORD temp, temp2;
+	UWORD_ temp, temp2;
 
 	for (count = 0; count < 8; count ++ ) {
 		el = Indx[RSPOpC.rs].B[count];
@@ -706,7 +706,7 @@ void RSP_Vector_VMACU (void) {
 
 void RSP_Vector_VMACQ (void) {
 	int count, el, del;
-	UWORD temp;
+	UWORD_ temp;
 
 	for (count = 0; count < 8; count ++ ) {
 		el = Indx[RSPOpC.rs].B[count];
@@ -748,7 +748,7 @@ void RSP_Vector_VMACQ (void) {
 
 void RSP_Vector_VMADL (void) {
 	int count, el, del;
-	UWORD temp, temp2;
+	UWORD_ temp, temp2;
 
 	for (count = 0; count < 8; count ++ ) {
 		el = Indx[RSPOpC.rs].B[count];
@@ -787,7 +787,7 @@ void RSP_Vector_VMADL (void) {
 
 void RSP_Vector_VMADM (void) {
 	int count, el, del;
-	UWORD temp, temp2;
+	UWORD_ temp, temp2;
 
 	for (count = 0; count < 8; count ++ ) {
 		el = Indx[RSPOpC.rs].B[count];
@@ -829,7 +829,7 @@ void RSP_Vector_VMADM (void) {
 
 void RSP_Vector_VMADN (void) {
 	int count, el, del;
-	UWORD temp, temp2;
+	UWORD_ temp, temp2;
 
 	for (count = 0; count < 8; count ++ ) {
 		el = Indx[RSPOpC.rs].B[count];
@@ -902,7 +902,7 @@ void RSP_Vector_VMADH (void) {
 
 void RSP_Vector_VADD (void) {
 	int count, el, del;
-	UWORD temp;
+	UWORD_ temp;
 	
 	for ( count = 0; count < 8; count++ ) {
 		el = Indx[RSPOpC.rs].B[count];
@@ -930,7 +930,7 @@ void RSP_Vector_VADD (void) {
 
 void RSP_Vector_VSUB (void) {
 	int count, el, del;
-	UWORD temp;
+	UWORD_ temp;
 	
 	for ( count = 0; count < 8; count++ ) {
 		el = Indx[RSPOpC.rs].B[count];
@@ -980,7 +980,7 @@ void RSP_Vector_VABS (void) {
 
 void RSP_Vector_VADDC (void) {
 	int count, el, del;
-	UWORD temp;
+	UWORD_ temp;
 	
 	RSP_Flags[0].UW = 0;
 	for ( count = 0; count < 8; count++ ) {
@@ -998,7 +998,7 @@ void RSP_Vector_VADDC (void) {
 
 void RSP_Vector_VSUBC (void) {
 	int count, el, del;
-	UWORD temp;
+	UWORD_ temp;
 	
 	RSP_Flags[0].UW = 0x0;
 	for ( count = 0; count < 8; count++ ) {

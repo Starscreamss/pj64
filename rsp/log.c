@@ -26,7 +26,7 @@
 
 #include <windows.h>
 #include <stdio.h>
-#include "RSP_Registers.h"
+#include "RSP Registers.h"
 #include "log.h"
 
 #ifdef Log_x86Code
