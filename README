@@ -7,6 +7,8 @@ r4300i/core
 * try make things more bulletproof for rerecording/bizhawk.
 * remove RSP/audio interface
 * fix broken opcodes/timing/etc/overall accuracy
+gui:
+* add 7zip support (possibly via File_Extractor)
 RSP:
 * integrate into main executable (remove selectable RSPs)
 * fix broken opcodes/add missing
