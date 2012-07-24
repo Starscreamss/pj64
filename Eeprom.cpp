@@ -38,6 +38,7 @@ unsigned char byte2bcd(int n)
 	n %= 100;
 	return ((n / 10) << 4) | (n % 10);
 }
+
 void CloseEeprom (void) {
 	if (hEepromFile) {
 		CloseHandle(hEepromFile);

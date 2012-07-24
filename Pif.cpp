@@ -35,6 +35,33 @@ void ProcessControllerCommand ( int Control, BYTE * Command);
 void ReadControllerCommand (int Control, BYTE * Command);
 
 BYTE PifRom[0x7C0], *PIF_Ram;
+#define CHL_LEN 0x20
+void n64_cic_nus_6105(char chl[], char rsp[], int len)
+{
+	static char lut0[0x10] = {
+		0x4, 0x7, 0xA, 0x7, 0xE, 0x5, 0xE, 0x1, 
+		0xC, 0xF, 0x8, 0xF, 0x6, 0x3, 0x6, 0x9
+	};
+	static char lut1[0x10] = {
+		0x4, 0x1, 0xA, 0x7, 0xE, 0x5, 0xE, 0x1, 
+		0xC, 0x9, 0x8, 0x5, 0x6, 0x3, 0xC, 0x9
+	};
+	char key, *lut;
+	int i, sgn, mag, mod;
+
+	for (key = 0xB, lut = lut0, i = 0; i < len; i++) {
+		rsp[i] = (key + 5 * chl[i]) & 0xF;
+		key = lut[rsp[i]];
+		sgn = (rsp[i] >> 3) & 0x1;
+		mag = ((sgn == 1) ? ~rsp[i] : rsp[i]) & 0x7;
+		mod = (mag % 3 == 1) ? sgn : 1 - sgn;
+		if (lut == lut1 && (rsp[i] == 0x1 || rsp[i] == 0x9))
+			mod = 1;
+		if (lut == lut1 && (rsp[i] == 0xB || rsp[i] == 0xE))
+			mod = 0;
+		lut = (mod == 1) ? lut1 : lut0;
+	}
+}
 
 int GetCicChipID (BYTE * RomData) {
 	_int64 CRC = 0;
@@ -93,133 +120,8 @@ void LogControllerPakData (char * Description) {
 #endif
 }
 
-#define IncreaseMaxPif2 300
-int MaxPif2Cmds = 300;
-unsigned __int64 * Pif2Reply[4];
-
-char * GetPif2FileName(void) {
-	char path_buffer[_MAX_PATH], drive[_MAX_DRIVE] ,dir[_MAX_DIR];
-	char fname[_MAX_FNAME],ext[_MAX_EXT];
-	static char IniFileName[_MAX_PATH];
-
-	GetModuleFileName(NULL,path_buffer,sizeof(path_buffer));
-	_splitpath( path_buffer, drive, dir, fname, ext );
-	sprintf(IniFileName,"%s%s%s",drive,dir,"pif2.dat");
-	return IniFileName;
-}
-
-BOOLEAN pif2valid = FALSE;
-
-void LoadPIF2 () {
-	FILE *pif2db = fopen (GetPif2FileName(), "rt");
-//	unsigned __int64 p1, p2, r1, r2;
-	char buff[255];
-	int cnt = 0;
-	
-	Pif2Reply[0] = ( unsigned __int64 *)malloc((MaxPif2Cmds + 1) * sizeof(__int64));
-	Pif2Reply[1] = ( unsigned __int64 *)malloc((MaxPif2Cmds + 1) * sizeof(__int64));
-	Pif2Reply[2] = ( unsigned __int64 *)malloc((MaxPif2Cmds + 1) * sizeof(__int64));
-	Pif2Reply[3] = ( unsigned __int64 *)malloc((MaxPif2Cmds + 1) * sizeof(__int64));
-
-	if (Pif2Reply[0] == NULL || Pif2Reply[1] == NULL ||
-		Pif2Reply[2] == NULL || Pif2Reply[3] == NULL) 
-	{
-		DisplayError(GS(MSG_MEM_ALLOC_ERROR));
-		ExitThread(0);
-	}
-	if (pif2db == NULL) {
-		Pif2Reply[0][0] = -1; Pif2Reply[1][0] = -1; 
-		Pif2Reply[2][0] = -1; Pif2Reply[3][0] = -1;
-		return;
-	}
-	
-	while (feof (pif2db) == 0) {
-		if (cnt == MaxPif2Cmds) {
-			MaxPif2Cmds += IncreaseMaxPif2;
-			Pif2Reply[0] = ( unsigned __int64 *)realloc(Pif2Reply[0],(MaxPif2Cmds + 1) * sizeof(__int64));
-			Pif2Reply[1] = ( unsigned __int64 *)realloc(Pif2Reply[1],(MaxPif2Cmds + 1) * sizeof(__int64));
-			Pif2Reply[2] = ( unsigned __int64 *)realloc(Pif2Reply[2],(MaxPif2Cmds + 1) * sizeof(__int64));
-			Pif2Reply[3] = ( unsigned __int64 *)realloc(Pif2Reply[3],(MaxPif2Cmds + 1) * sizeof(__int64));
-			if (Pif2Reply[0] == NULL || Pif2Reply[1] == NULL ||
-				Pif2Reply[2] == NULL || Pif2Reply[3] == NULL) 
-			{
-				DisplayError(GS(MSG_MEM_ALLOC_ERROR));
-				ExitThread(0);
-			}
-		}
-		fgets (buff, 255, pif2db);
-		if (buff[0] != ';') {
-			if (buff[0] != '\n') {
-				sscanf (buff, "0x%08X%08X, 0x%08X%08X, 0x%08X%08X, 0x%08X%08X", 
-				((DWORD *)&Pif2Reply[0][cnt])+1, &Pif2Reply[0][cnt], 
-				((DWORD *)&Pif2Reply[1][cnt])+1, &Pif2Reply[1][cnt],
-				((DWORD *)&Pif2Reply[2][cnt])+1, &Pif2Reply[2][cnt], 
-				((DWORD *)&Pif2Reply[3][cnt])+1, &Pif2Reply[3][cnt]);
-				cnt++;
-			}
-		}
-	}
-
-	Pif2Reply[0][cnt] = Pif2Reply[1][cnt] = Pif2Reply[2][cnt] = Pif2Reply[3][cnt] = -1;
-	
-	pif2valid = TRUE;
-
-	fclose (pif2db);
-}
-
 void PifRamRead (void) {
-	int Channel, CurPos;
-
-	Channel = 0;
-	CurPos  = 0;
-	
-	if (PIF_Ram[0x3F] == 0x2) {
-		int cnt = 0;
-		char buff[256];
-		if (pif2valid == FALSE)
-			LoadPIF2 ();
-		while (Pif2Reply[0][cnt] != -1) {
-			if (Pif2Reply[0][cnt] == *(unsigned __int64 *)&PIF_Ram[48]) {
-				if (Pif2Reply[1][cnt] == *(unsigned __int64 *)&PIF_Ram[56]) {
-					PIF_Ram[46] = PIF_Ram[47] = 0x00;
-					*(unsigned __int64 *)&PIF_Ram[48] = Pif2Reply[2][cnt];
-					*(unsigned __int64 *)&PIF_Ram[56] = Pif2Reply[3][cnt];
-					cnt = -1;
-					break;
-				}
-			}
-			cnt++;
-		}
-		if (cnt != -1) {
-			char buff2[256];
-			int count;
-
-			sprintf (buff, "%s :(\r\n\r\nInfo:\r\nP1=%08X%08X P2=%08X%08X\r\n", GS(MSG_PIF2_ERROR),
-				*(DWORD *)&PIF_Ram[52],
-				*(DWORD *)&PIF_Ram[48],
-				*(DWORD *)&PIF_Ram[60],
-				*(DWORD *)&PIF_Ram[56]);
-			for (count = 48; count < 64; count++) {
-				if (count % 4 == 0) { 
-					strcat(buff,count == 48?"0x":", 0x");
-				}
-				sprintf(buff2,"%02X",PIF_Ram[count]);
-				strcat(buff,buff2);
-			}
-			if (!inFullScreen) {
-				MessageBox (NULL, buff, GS(MSG_PIF2_TITLE), MB_OK);
-			}
-		}
-		/*
-            PIF_Ram[48] = 0x3E; PIF_Ram[49] = 0xC6; PIF_Ram[50] = 0xC0; PIF_Ram[51] = 0x4E;
-            PIF_Ram[52] = 0xBD; PIF_Ram[53] = 0x37; PIF_Ram[54] = 0x15; PIF_Ram[55] = 0x55;
-            PIF_Ram[56] = 0x5A; PIF_Ram[57] = 0x8C; PIF_Ram[58] = 0x2A; PIF_Ram[59] = 0x8C;
-            PIF_Ram[60] = 0xD3; PIF_Ram[61] = 0x71; PIF_Ram[62] = 0x71; PIF_Ram[63] = 0x00;
-		*/
-
-		CurPos = 0x40;
-	}
-
+	int Channel = 0, CurPos = 0;
 	do {
 		switch(PIF_Ram[CurPos]) {
 		case 0x00: 
@@ -253,11 +155,28 @@ void PifRamRead (void) {
 
 void PifRamWrite (void) {
 	int Channel, CurPos;
-
+	char Challenge[30], Response[30];
 	Channel = 0;
 
 	if( PIF_Ram[0x3F] > 0x1) { 
 		switch (PIF_Ram[0x3F]) {
+		case 0x02:
+			// format the 'challenge' message into 30 nibbles for X-Scale's CIC code
+			for (int i = 0; i < 15; i++)
+			{
+				Challenge[i*2] =   (PIF_Ram[48+i] >> 4) & 0x0f;
+				Challenge[i*2+1] =  PIF_Ram[48+i]       & 0x0f;
+			}
+			// calculate the proper response for the given challenge (X-Scale's algorithm)
+			n64_cic_nus_6105(Challenge, Response, CHL_LEN - 2);
+			// re-format the 'response' into a byte stream
+			for (int i = 0; i < 15; i++)
+			{
+				PIF_Ram[48+i] = (Response[i*2] << 4) + Response[i*2+1];
+			}
+			// the last byte (2 nibbles) is always 0
+			PIF_Ram[63] = 0;
+			break;
 		case 0x08: 
 			PIF_Ram[0x3F] = 0; 
 			MI_INTR_REG |= MI_INTR_SI;
