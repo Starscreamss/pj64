@@ -2,6 +2,7 @@
 #include <dsound.h>
 #include <stdio.h>
 #include "audio.h"
+#include "sound_out.h"
 
 #define AI_STATUS_FIFO_FULL	0x80000000		/* Bit 31: full */
 #define AI_STATUS_DMA_BUSY	0x40000000		/* Bit 30: busy */
